@@ -14,7 +14,7 @@ public class ConnectionFactory {
 	private final EntityManagerFactory factory;
 
 	public ConnectionFactory() {
-		factory = Persistence.createEntityManagerFactory("CadastroPessoasPU");
+		factory = Persistence.createEntityManagerFactory("ECommercePU");
 	}
 
 	@Produces

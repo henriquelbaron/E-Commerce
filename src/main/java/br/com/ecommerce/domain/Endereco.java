@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name = "endereco")
 public class Endereco implements IBaseModel, Serializable {
@@ -15,13 +17,17 @@ public class Endereco implements IBaseModel, Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank
 	private String logradouro;
 	private String numero;
 	private String complemento;
 	private String bairro;
+	@NotBlank
 	private String cep;
+	@NotBlank
 	private String cidade;
 	private String uf;
+	@NotBlank
 	private Cliente cliente;
 
 	public String getLogradouro() {
@@ -86,6 +92,11 @@ public class Endereco implements IBaseModel, Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	@Override
+	public String toString() {
+		return logradouro + " " + numero + " " + bairro;
 	}
 
 	@Override

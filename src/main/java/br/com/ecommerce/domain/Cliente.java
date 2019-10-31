@@ -16,11 +16,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.ecommerce.domain.enums.Perfil;
 
@@ -31,14 +33,18 @@ public class Cliente implements IBaseModel, Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank
 	private String nome;
 	@Email
-	@Column(unique = true)
+	@NotBlank
 	private String email;
+	@Column(length = 18)
+	@NotBlank
 	private String cpfOuCnpj;
-	private Integer tipo;
+	@NotBlank
 	private String senha;
-	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "idEndereco", nullable = false)
 	private Endereco endereco;
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;
@@ -91,14 +97,6 @@ public class Cliente implements IBaseModel, Serializable {
 
 	public void setCpfOuCnpj(String cpfOuCnpj) {
 		this.cpfOuCnpj = cpfOuCnpj;
-	}
-
-	public Integer getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
 	}
 
 	public String getSenha() {

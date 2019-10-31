@@ -1,0 +1,30 @@
+#form {
+	width: 100vw;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center
+}
+
+.table {
+	width:1000px;
+	margin: auto;
+}
+
+
+.pessoa-td-acoes {
+	text-align: center;
+	width: 100px;
+}
+.pessoa-td-profissao {
+	text-align: center;
+}
+
+.pessoa-td-idade{
+	text-align: center;
+	width: 80px;
+}
+.pessoa-td-id{
+	text-align: center;
+	width: 60px;
+}

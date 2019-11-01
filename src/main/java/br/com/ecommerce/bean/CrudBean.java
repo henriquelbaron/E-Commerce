@@ -44,7 +44,7 @@ public abstract class CrudBean<T extends IBaseModel, D extends BaseDao> implemen
 		}
 	}
 
-	private void refresh() {
+	protected void refresh() {
 		entidade = newEntidade();
 		entidades = getDao().buscarTodos();
 	}

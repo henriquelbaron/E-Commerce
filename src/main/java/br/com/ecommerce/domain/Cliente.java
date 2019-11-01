@@ -12,6 +12,8 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +27,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.ecommerce.domain.enums.Perfil;
+import br.com.ecommerce.domain.enums.Genero;
 
 @Entity
 @Table(name = "cliente")
@@ -43,11 +46,18 @@ public class Cliente implements IBaseModel, Serializable {
 	private String cpfOuCnpj;
 	@NotBlank
 	private String senha;
+	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idEndereco", nullable = false)
 	private Endereco endereco;
+	
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;
+	
+	@Column(name = "SEXO")
+	@Enumerated(EnumType.STRING)
+	private Genero sexo;
+	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "perfis")
 	private Set<Integer> perfis = new HashSet<>();
@@ -71,8 +81,20 @@ public class Cliente implements IBaseModel, Serializable {
 		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
 
+	public Genero getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Genero sexo) {
+		this.sexo = sexo;
+	}
+
+	public void setPerfis(Set<Integer> perfis) {
+		this.perfis = perfis;
+	}
+
 	public void addPerfil(Perfil perfil) {
-		perfis.add(perfil.getCod());
+		perfis.add(perfil.getId());
 	}
 
 	public String getNome() {

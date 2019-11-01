@@ -1,54 +1,45 @@
 package br.com.ecommerce.domain;
 
+import javax.persistence.Table;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotBlank;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-@Table(name = "categoria")
-public class Categoria implements IBaseModel, Serializable {
+@Table(name = "produto_categoria")
+public class ProdutoCategoria implements IBaseModel, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank
-	private String nome;
-	@OneToMany(mappedBy = "categoria")
-	private List<ProdutoCategoria> produtoCategorias;
+	@ManyToOne
+	@JoinColumn(name = "idCategoria", nullable = false)
+	private Categoria categoria;
+	@ManyToOne
+	@JoinColumn(name = "idProduto", nullable = false)
+	private Produto produto;
 
-	public Categoria() {
-		produtoCategorias = new ArrayList<>();
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-	public Categoria(Long id, String nome) {
-		this.id = id;
-		this.nome = nome;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
-	public List<ProdutoCategoria> getProdutoCategorias() {
-		return produtoCategorias;
+	public Produto getProduto() {
+		return produto;
 	}
 
-	public void setProdutoCategorias(List<ProdutoCategoria> produtoCategorias) {
-		this.produtoCategorias = produtoCategorias;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
 	@Override
@@ -67,7 +58,7 @@ public class Categoria implements IBaseModel, Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		ProdutoCategoria other = (ProdutoCategoria) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -85,5 +76,4 @@ public class Categoria implements IBaseModel, Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 }

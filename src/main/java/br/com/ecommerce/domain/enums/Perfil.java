@@ -3,16 +3,16 @@ package br.com.ecommerce.domain.enums;
 public enum Perfil {
 	ADMIN(1, "ROLE_ADMIN"), CLIENTE(2, "ROLE_CLIENTE");
 
-	private int cod;
+	private int id;
 	private String descricao;
 
 	private Perfil(int cod, String descricao) {
-		this.cod = cod;
+		this.id = cod;
 		this.descricao = descricao;
 	}
 
-	public int getCod() {
-		return cod;
+	public int getId() {
+		return id;
 	}
 
 	public String getDescricao() {
@@ -24,7 +24,7 @@ public enum Perfil {
 			return null;
 		}
 		for (Perfil x : Perfil.values()) {
-			if (cod.equals(x.getCod())) {
+			if (cod.equals(x.getId())) {
 				return x;
 			}
 		}

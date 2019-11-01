@@ -6,19 +6,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import br.com.ecommerce.domain.enums.Genero;
 
 @Entity
 @Table(name = "produto")
@@ -34,12 +37,16 @@ public class Produto implements IBaseModel, Serializable {
 	private Double precoCompra;
 	private Double precoVenda;
 	private Long quantidade;
+	@Column(name = "SEXO")
+	@Enumerated(EnumType.STRING)
+	private Genero sexo;
 	@NotBlank
 	private String tamanho;
 	private String cor;
-	@ManyToMany
-	@JoinTable(name = "produto_categoria", joinColumns = @JoinColumn(name = "idProduto"), inverseJoinColumns = @JoinColumn(name = "idCategoria"))
-	private List<Categoria> categorias = new ArrayList<>();
+	private String urlImagem;
+	@NotNull
+	@OneToMany(mappedBy = "produto")
+	private List<ProdutoCategoria> categorias = new ArrayList<>();
 
 	@OneToMany(mappedBy = "produto")
 	private Set<ItemPedido> itens = new HashSet<>();
@@ -60,6 +67,26 @@ public class Produto implements IBaseModel, Serializable {
 	}
 
 	public Produto() {
+	}
+
+	public String getUrlImagem() {
+		return urlImagem;
+	}
+
+	public void setUrlImagem(String urlImagem) {
+		this.urlImagem = urlImagem;
+	}
+
+	public void addCategoria(ProdutoCategoria categoria) {
+		this.categorias.add(categoria);
+	}
+
+	public Genero getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Genero sexo) {
+		this.sexo = sexo;
 	}
 
 	public Long getQuantidade() {
@@ -94,11 +121,11 @@ public class Produto implements IBaseModel, Serializable {
 		this.precoVenda = precoVenda;
 	}
 
-	public List<Categoria> getCategorias() {
+	public List<ProdutoCategoria> getCategorias() {
 		return categorias;
 	}
 
-	public void setCategorias(List<Categoria> categorias) {
+	public void setCategorias(List<ProdutoCategoria> categorias) {
 		this.categorias = categorias;
 	}
 
@@ -108,6 +135,22 @@ public class Produto implements IBaseModel, Serializable {
 
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
+	}
+
+	public String getTamanho() {
+		return tamanho;
+	}
+
+	public void setTamanho(String tamanho) {
+		this.tamanho = tamanho;
+	}
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
 	}
 
 	@Override

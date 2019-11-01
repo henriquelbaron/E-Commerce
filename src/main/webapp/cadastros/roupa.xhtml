@@ -17,36 +17,40 @@
 				<p:panelGrid columns="2">
 					<f:facet name="header">Cadastro</f:facet>
 
-					<p:outputLabel value="Produto" for="produto" />
-					<p:inputText id="produto" value="#{roupaBean.entidade.nome}" />
+					<p:outputLabel value="Nome" for="produto" />
+					<p:inputText id="produto" value="#{produtoBean.entidade.nome}" />
+
+					<p:outputLabel value="Categorias" for="pickList" />
+					<p:pickList id="pickList" value="#{produtoBean.categorias}"
+						var="cat" itemLabel="#{cat.nome}" itemValue="#{cat}" />
 
 					<p:outputLabel for="precoCompra" value="Preço de Compra" />
 					<p:inputNumber id="precoCompra" maxValue="99999"
-						value="#{roupaBean.entidade.precoCompra}" symbol=" R$ " />
+						value="#{produtoBean.entidade.precoCompra}" symbol=" R$ " />
 
 					<p:outputLabel for="precoVenda" value="Preço de Venda" />
 					<p:inputNumber id="precoVenda" symbol=" R$ " maxValue="99999"
-						value="#{roupaBean.entidade.precoVenda}" />
+						value="#{produtoBean.entidade.precoVenda}" />
 
 					<p:outputLabel for="tamanho" value="Tamanho" />
-					<p:inputText id="tamanho" value="#{roupaBean.entidade.tamanho}" />
+					<p:inputText id="tamanho" value="#{produtoBean.entidade.tamanho}" />
 
 					<p:outputLabel for="cor" value="Cor" />
-					<p:inputText id="cor" value="#{roupaBean.entidade.cor}" />
+					<p:inputText id="cor" value="#{produtoBean.entidade.cor}" />
 
 					<p:outputLabel for="quantidade" value="Quantidade" />
 					<p:inputNumber id="quantidade"
-						value="#{roupaBean.entidade.quantidade}" decimalPlaces="0"/>
+						value="#{produtoBean.entidade.quantidade}" decimalPlaces="0" />
 
 					<f:facet name="footer">
 						<p:commandButton update="formTable:table"
-							action="#{roupaBean.salvar}" value="Cadastrar" />
+							action="#{produtoBean.salvar}" value="Cadastrar" />
 					</f:facet>
 				</p:panelGrid>
 			</h:form>
 
 			<h:form id="formTable">
-				<p:dataTable id="table" var="p" value="#{roupaBean.entidades}"
+				<p:dataTable id="table" var="p" value="#{produtoBean.entidades}"
 					emptyMessage="Não a Profissões Cadastradas">
 
 					<f:facet name="header">Profissões Cadastradas</f:facet>
@@ -69,7 +73,7 @@
 							update="@form formTable:confirm"
 							oncomplete="PF('confirm').show()">
 							<f:setPropertyActionListener value="#{p}"
-								target="#{roupaBean.entidade}" />
+								target="#{produtoBean.entidade}" />
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
@@ -79,7 +83,7 @@
 					closeOnEscape="true"
 					message="Tem certeza que deseja excluir #{produtoBean.entidade.nome}?">
 					<p:commandButton value="Sim" icon="fa fa-check" update="table"
-						action="#{roupaBean.delete}" oncomplete="PF('confirm').hide()" />
+						action="#{produtoBean.delete}" oncomplete="PF('confirm').hide()" />
 					<p:commandButton value="Não" icon="fa fa-times"
 						oncomplete="PF('confirm').hide(); return false;" />
 					<!-- /*return false é para não atualizar a pagina*/ -->

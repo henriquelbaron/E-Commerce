@@ -27,7 +27,6 @@ public class Endereco implements IBaseModel, Serializable {
 	@NotBlank
 	private String cidade;
 	private String uf;
-	@NotBlank
 	private Cliente cliente;
 
 	public String getLogradouro() {

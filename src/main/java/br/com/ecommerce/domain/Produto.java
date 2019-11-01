@@ -10,34 +10,45 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name = "produto")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Produto implements IBaseModel, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank
 	private String nome;
-	private Double preco;
+	private Double precoCompra;
+	private Double precoVenda;
+	private Long quantidade;
+	@NotBlank
+	private String tamanho;
+	private String cor;
 	@ManyToMany
-	@JoinTable(name = "produto_categoria", joinColumns = @JoinColumn(name = "idProduto"),
-	inverseJoinColumns = @JoinColumn(name = "idCategoria"))
+	@JoinTable(name = "produto_categoria", joinColumns = @JoinColumn(name = "idProduto"), inverseJoinColumns = @JoinColumn(name = "idCategoria"))
 	private List<Categoria> categorias = new ArrayList<>();
 
 	@OneToMany(mappedBy = "produto")
 	private Set<ItemPedido> itens = new HashSet<>();
 
-	public Produto(Long id, String nome, Double preco) {
+	public Produto(Long id, String nome, Double precoCompra, Double precoVenda) {
 		this.id = id;
 		this.nome = nome;
-		this.preco = preco;
+		this.precoCompra = precoCompra;
+		this.precoVenda = precoVenda;
 	}
 
 	public List<Pedido> getPedidos() {
@@ -51,6 +62,14 @@ public class Produto implements IBaseModel, Serializable {
 	public Produto() {
 	}
 
+	public Long getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Long quantidade) {
+		this.quantidade = quantidade;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -59,12 +78,20 @@ public class Produto implements IBaseModel, Serializable {
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
-		return preco;
+	public Double getPrecoCompra() {
+		return precoCompra;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
+	public void setPrecoCompra(Double precoCompra) {
+		this.precoCompra = precoCompra;
+	}
+
+	public Double getPrecoVenda() {
+		return precoVenda;
+	}
+
+	public void setPrecoVenda(Double precoVenda) {
+		this.precoVenda = precoVenda;
 	}
 
 	public List<Categoria> getCategorias() {

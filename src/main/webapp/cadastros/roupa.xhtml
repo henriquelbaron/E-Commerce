@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Cadastro de produtos</ui:define>
+
+	<ui:define name="scripts">
+		<h:outputScript library="js" name="mascaraMonetaria.js" target="head" />
+	</ui:define>
+	<ui:define name="cadastro">
+		<div id="content">
+			<h:form styleClass="form" id="form">
+				<p:panelGrid columns="2">
+					<f:facet name="header">Cadastro</f:facet>
+
+					<p:outputLabel value="Produto" for="produto" />
+					<p:inputText id="produto" value="#{roupaBean.entidade.nome}" />
+
+					<p:outputLabel for="precoCompra" value="Preço de Compra" />
+					<p:inputNumber id="precoCompra" maxValue="99999"
+						value="#{roupaBean.entidade.precoCompra}" symbol=" R$ " />
+
+					<p:outputLabel for="precoVenda" value="Preço de Venda" />
+					<p:inputNumber id="precoVenda" symbol=" R$ " maxValue="99999"
+						value="#{roupaBean.entidade.precoVenda}" />
+
+					<p:outputLabel for="tamanho" value="Tamanho" />
+					<p:inputText id="tamanho" value="#{roupaBean.entidade.tamanho}" />
+
+					<p:outputLabel for="cor" value="Cor" />
+					<p:inputText id="cor" value="#{roupaBean.entidade.cor}" />
+
+					<p:outputLabel for="quantidade" value="Quantidade" />
+					<p:inputNumber id="quantidade"
+						value="#{roupaBean.entidade.quantidade}" decimalPlaces="0"/>
+
+					<f:facet name="footer">
+						<p:commandButton update="formTable:table"
+							action="#{roupaBean.salvar}" value="Cadastrar" />
+					</f:facet>
+				</p:panelGrid>
+			</h:form>
+
+			<h:form id="formTable">
+				<p:dataTable id="table" var="p" value="#{roupaBean.entidades}"
+					emptyMessage="Não a Profissões Cadastradas">
+
+					<f:facet name="header">Profissões Cadastradas</f:facet>
+
+					<p:column headerText="ID">
+						<p:outputLabel value="#{p.id}" />
+					</p:column>
+
+					<p:column headerText="produto">
+						<p:outputLabel value="#{p.nome}" />
+					</p:column>
+
+					<p:column headerText="Ações">
+						<p:commandButton icon="fa fa-pencil" update="form">
+							<f:setPropertyActionListener value="#{p}"
+								target="#{roupaBean.entidade}" />
+						</p:commandButton>
+
+						<p:commandButton icon="fa fa-trash"
+							update="@form formTable:confirm"
+							oncomplete="PF('confirm').show()">
+							<f:setPropertyActionListener value="#{p}"
+								target="#{roupaBean.entidade}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:confirmDialog id="confirm" widgetVar="confirm" header="Atenção!"
+					responsive="true" showEffect="fade" hideEffect="fade"
+					closeOnEscape="true"
+					message="Tem certeza que deseja excluir #{produtoBean.entidade.nome}?">
+					<p:commandButton value="Sim" icon="fa fa-check" update="table"
+						action="#{roupaBean.delete}" oncomplete="PF('confirm').hide()" />
+					<p:commandButton value="Não" icon="fa fa-times"
+						oncomplete="PF('confirm').hide(); return false;" />
+					<!-- /*return false é para não atualizar a pagina*/ -->
+				</p:confirmDialog>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:decorate>

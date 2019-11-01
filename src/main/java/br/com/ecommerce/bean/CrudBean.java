@@ -9,7 +9,6 @@ import br.com.ecommerce.bean.util.MessageUtil;
 import br.com.ecommerce.dao.BaseDao;
 import br.com.ecommerce.domain.IBaseModel;
 
-
 public abstract class CrudBean<T extends IBaseModel, D extends BaseDao> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +30,7 @@ public abstract class CrudBean<T extends IBaseModel, D extends BaseDao> implemen
 			MessageUtil.info("Salvo com Sucesso!");
 			refresh();
 		} catch (Exception e) {
-			MessageUtil.error("Erro Inesperado");
+			MessageUtil.error("Erro Inesperado " + e);
 		}
 	}
 
@@ -41,7 +40,7 @@ public abstract class CrudBean<T extends IBaseModel, D extends BaseDao> implemen
 			MessageUtil.info("Excluido com Sucesso!");
 			refresh();
 		} catch (Exception e) {
-			MessageUtil.error("Erro Inesperado");
+			MessageUtil.error("Erro Inesperado" + e);
 		}
 	}
 

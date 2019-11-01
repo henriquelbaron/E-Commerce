@@ -30,6 +30,7 @@ public class ClienteBean extends CrudBean<Cliente, ClienteDao> {
 		return cliente;
 	}
 
+
 	public String getConfirmarSenha() {
 		return confirmarSenha;
 	}

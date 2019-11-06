@@ -6,10 +6,15 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
+	<ui:define name="styleCss">
+		<h:outputStylesheet library="css" name="cadastroStyle.css"
+			target="head" />
+	</ui:define>
+
 	<ui:define name="titulo">Cadastro de Categorias</ui:define>
 	<ui:define name="cadastro">
 		<div id="content">
-			<h:form styleClass="form" id="form">
+			<h:form class="form" id="form">
 				<p:panelGrid columns="2">
 					<f:facet name="header">Cadastro</f:facet>
 
@@ -23,21 +28,21 @@
 				</p:panelGrid>
 			</h:form>
 
-			<h:form id="formTable">
+			<h:form id="formTable" styleClass="table">
 				<p:dataTable id="table" var="p" value="#{categoriaBean.entidades}"
-					emptyMessage="Não a Profissões Cadastradas">
+					emptyMessage="Não a Categorias Cadastradas">
 
-					<f:facet name="header">Profissões Cadastradas</f:facet>
+					<f:facet name="header">Categorias Cadastradas</f:facet>
 
-					<p:column headerText="ID">
+					<p:column headerText="ID" styleClass="td-id td-table">
 						<p:outputLabel value="#{p.id}" />
 					</p:column>
 
-					<p:column headerText="Categoria">
+					<p:column headerText="Categoria" styleClass="td-table td-nome">
 						<p:outputLabel value="#{p.nome}" />
 					</p:column>
 
-					<p:column headerText="Ações">
+					<p:column headerText="Ações" styleClass="td-table td-acoes">
 						<p:commandButton icon="fa fa-pencil" update="form">
 							<f:setPropertyActionListener value="#{p}"
 								target="#{categoriaBean.entidade}" />

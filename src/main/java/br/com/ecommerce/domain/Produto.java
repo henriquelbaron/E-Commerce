@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -37,15 +39,14 @@ public class Produto implements IBaseModel, Serializable {
 	private Double precoCompra;
 	private Double precoVenda;
 	private Long quantidade;
-	@Column(name = "SEXO")
 	@Enumerated(EnumType.STRING)
-	private Genero sexo;
+	private Genero genero;
 	@NotBlank
 	private String tamanho;
 	private String cor;
-	private String urlImagem;
+	private String imagem;
 	@NotNull
-	@OneToMany(mappedBy = "produto")
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
 	private List<ProdutoCategoria> categorias = new ArrayList<>();
 
 	@OneToMany(mappedBy = "produto")
@@ -69,24 +70,24 @@ public class Produto implements IBaseModel, Serializable {
 	public Produto() {
 	}
 
-	public String getUrlImagem() {
-		return urlImagem;
-	}
-
-	public void setUrlImagem(String urlImagem) {
-		this.urlImagem = urlImagem;
-	}
-
 	public void addCategoria(ProdutoCategoria categoria) {
 		this.categorias.add(categoria);
 	}
 
-	public Genero getSexo() {
-		return sexo;
+	public String getImagem() {
+		return imagem;
 	}
 
-	public void setSexo(Genero sexo) {
-		this.sexo = sexo;
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
+
+	public Genero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(Genero sexo) {
+		this.genero = sexo;
 	}
 
 	public Long getQuantidade() {

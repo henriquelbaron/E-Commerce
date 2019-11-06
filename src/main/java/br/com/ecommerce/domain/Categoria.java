@@ -86,4 +86,8 @@ public class Categoria implements IBaseModel, Serializable {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return nome;
+	}
 }

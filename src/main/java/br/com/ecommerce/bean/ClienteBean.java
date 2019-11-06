@@ -24,12 +24,10 @@ public class ClienteBean extends CrudBean<Cliente, ClienteDao> {
 
 	@Override
 	public Cliente newEntidade() {
-		Endereco endereco = new Endereco();
 		Cliente cliente = new Cliente();
-		cliente.setEndereco(endereco);
+		cliente.setEndereco(new Endereco());
 		return cliente;
 	}
-
 
 	public String getConfirmarSenha() {
 		return confirmarSenha;

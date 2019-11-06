@@ -1,0 +1,31 @@
+.form {
+	max-height: 600px;
+	width: 100vw;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	margin-bottom: 20px;
+}
+
+.table {
+	margin: auto;
+	width: 600px;
+}
+
+.td-id {
+	width: 60px;
+}
+
+.td-nome {
+	max-width: 300px;
+}
+
+.td-acoes {
+	width: 100px;
+}
+
+.td-table {
+	text-align: center;
+}

@@ -11,36 +11,56 @@
 	<ui:define name="scripts">
 		<h:outputScript library="js" name="mascaraMonetaria.js" target="head" />
 	</ui:define>
+
+	<ui:define name="styleCss">
+		<h:outputStylesheet library="css" name="cadastroStyle.css" target="head" />
+	</ui:define>
+	
 	<ui:define name="cadastro">
-		<div id="content">
-			<h:form styleClass="form" id="form">
+		<div id="content" class="content">
+			<h:form class="form" id="form">
 				<p:panelGrid columns="2">
 					<f:facet name="header">Cadastro</f:facet>
 
 					<p:outputLabel value="Nome" for="produto" />
-					<p:inputText id="produto" value="#{produtoBean.entidade.nome}" />
+					<p:inputText id="produto" value="#{produtoBean.produto.nome}" />
+
+					<p:outputLabel value="Genero" for="genero" />
+					<h:selectOneMenu value="#{produtoBean.produto.genero}" id="genero">
+						<f:selectItem itemLabel="Selecione..." itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{produtoBean.generos}"
+							itemValue="#{genero}" var="genero"
+							itemLabel="#{genero.descricao}" />
+					</h:selectOneMenu>
 
 					<p:outputLabel value="Categorias" for="pickList" />
 					<p:pickList id="pickList" value="#{produtoBean.categorias}"
-						var="cat" itemLabel="#{cat.nome}" itemValue="#{cat}" />
+						converter="#{pickListCategoria}" var="cat" itemLabel="#{cat}"
+						itemValue="#{cat}">
+					</p:pickList>
 
 					<p:outputLabel for="precoCompra" value="Preço de Compra" />
 					<p:inputNumber id="precoCompra" maxValue="99999"
-						value="#{produtoBean.entidade.precoCompra}" symbol=" R$ " />
+						value="#{produtoBean.produto.precoCompra}" symbol=" R$ " />
 
 					<p:outputLabel for="precoVenda" value="Preço de Venda" />
-					<p:inputNumber id="precoVenda" symbol=" R$ " maxValue="99999"
-						value="#{produtoBean.entidade.precoVenda}" />
+					<p:inputNumber id="precoVenda" symbol=" R$ " maxValue="9999999"
+						value="#{produtoBean.produto.precoVenda}" />
 
 					<p:outputLabel for="tamanho" value="Tamanho" />
-					<p:inputText id="tamanho" value="#{produtoBean.entidade.tamanho}" />
+					<p:inputText id="tamanho" value="#{produtoBean.produto.tamanho}" />
 
 					<p:outputLabel for="cor" value="Cor" />
-					<p:inputText id="cor" value="#{produtoBean.entidade.cor}" />
+					<p:inputText id="cor" value="#{produtoBean.produto.cor}" />
 
 					<p:outputLabel for="quantidade" value="Quantidade" />
 					<p:inputNumber id="quantidade"
-						value="#{produtoBean.entidade.quantidade}" decimalPlaces="0" />
+						value="#{produtoBean.produto.quantidade}" decimalPlaces="0" />
+
+					<p:outputLabel for="upload" value="Imagem Produto" />
+					<p:fileUpload fileUploadListener="#{produtoBean.uploadAction}"
+						sizeLimit="5000000" fileLimit="1" auto="true" id="upload" />
 
 					<f:facet name="footer">
 						<p:commandButton update="formTable:table"
@@ -50,7 +70,7 @@
 			</h:form>
 
 			<h:form id="formTable">
-				<p:dataTable id="table" var="p" value="#{produtoBean.entidades}"
+				<p:dataTable id="table" var="p" value="#{produtoBean.produtos}"
 					emptyMessage="Não a Profissões Cadastradas">
 
 					<f:facet name="header">Profissões Cadastradas</f:facet>
@@ -62,18 +82,20 @@
 					<p:column headerText="produto">
 						<p:outputLabel value="#{p.nome}" />
 					</p:column>
-
+					<p:column headerText="Imagem">
+						<h:graphicImage value="/images/#{p.imagem}" />
+					</p:column>
 					<p:column headerText="Ações">
 						<p:commandButton icon="fa fa-pencil" update="form">
 							<f:setPropertyActionListener value="#{p}"
-								target="#{roupaBean.entidade}" />
+								target="#{produtoBean.produto}" />
 						</p:commandButton>
 
 						<p:commandButton icon="fa fa-trash"
 							update="@form formTable:confirm"
 							oncomplete="PF('confirm').show()">
 							<f:setPropertyActionListener value="#{p}"
-								target="#{produtoBean.entidade}" />
+								target="#{produtoBean.produto}" />
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
@@ -81,7 +103,7 @@
 				<p:confirmDialog id="confirm" widgetVar="confirm" header="Atenção!"
 					responsive="true" showEffect="fade" hideEffect="fade"
 					closeOnEscape="true"
-					message="Tem certeza que deseja excluir #{produtoBean.entidade.nome}?">
+					message="Tem certeza que deseja excluir #{produtoBean.produto.nome}?">
 					<p:commandButton value="Sim" icon="fa fa-check" update="table"
 						action="#{produtoBean.delete}" oncomplete="PF('confirm').hide()" />
 					<p:commandButton value="Não" icon="fa fa-times"

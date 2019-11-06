@@ -8,13 +8,17 @@
 
 <h:form>
 	<p:menubar>
-		<p:submenu label="Cadastros">
+		<p:submenu label="Cadastros" icon="fa fa-save">
 			<p:menuitem value="Categorias" outcome="categoria" />
-			<p:menuitem value="Clientes" outcome="cliente" />
+			<p:menuitem value="Clientes" outcome="cliente" icon="fa fa-user" />
+			<p:menuitem value="Produtos" outcome="produto" />
 		</p:submenu>
 		<f:facet name="options">
 			<p:commandButton type="button" value="Sair" icon="fa fa-home" />
 		</f:facet>
 	</p:menubar>
+	<p:autoComplete value="#{menuSuperiorBean.produtoLinhaEditavel}" completeMethod="#{menuSuperiorBean.ca}">
+	
+	</p:autoComplete>
 </h:form>
 </html>

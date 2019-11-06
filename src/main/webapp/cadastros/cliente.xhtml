@@ -11,9 +11,15 @@
 	<ui:define name="scripts">
 		<h:outputScript library="js" name="mascaraCpfCnpj.js" target="head" />
 	</ui:define>
+
+	<ui:define name="styleCss">
+		<h:outputStylesheet library="css" name="cadastroStyle.css"
+			target="head" />
+	</ui:define>
+	
 	<ui:define name="cadastro">
 		<div id="content">
-			<h:form styleClass="form" id="form">
+			<h:form class="form" id="form">
 				<p:panelGrid columns="2">
 					<f:facet name="header">Cadastro</f:facet>
 
@@ -65,7 +71,8 @@
 						<p:commandButton update="@form formTable"
 							action="#{clienteBean.salvar}" value="Cadastrar" />
 						<p:commandButton update="form" value="Limpar Campos"
-							process="@this" action="#{clienteBean.newEntidade()}" icon="fa fa-recycle" />
+							process="@this" action="#{clienteBean.newEntidade()}"
+							icon="fa fa-recycle" />
 					</f:facet>
 				</p:panelGrid>
 			</h:form>

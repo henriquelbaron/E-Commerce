@@ -1,6 +1,7 @@
 package br.com.ecommerce.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import br.com.ecommerce.domain.Produto;
 
@@ -11,4 +12,8 @@ public class ProdutoDao extends BaseDao<Produto> implements Serializable {
 		super(Produto.class);
 	}
 
+	public List<Produto> porNome(String nome) {
+		return manager.createQuery("from Produto where uper(nome) like :nome", Produto.class)
+				.setParameter("nome", nome.toUpperCase() + "%").getResultList();
+	}
 }

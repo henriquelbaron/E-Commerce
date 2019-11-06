@@ -8,11 +8,10 @@ import javax.persistence.TypedQuery;
 
 import br.com.ecommerce.domain.IBaseModel;
 
-
 public abstract class BaseDao<T extends IBaseModel> implements IBaseDao<T> {
 
 	@Inject
-	private EntityManager manager;
+	protected EntityManager manager;
 
 	private Class<T> persistenceClass;
 

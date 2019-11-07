@@ -34,11 +34,13 @@ public class ProdutoBean implements Serializable {
 	private Produto produto;
 	private DualListModel<Categoria> categorias;
 	private UploadArquivo fileUtil = new UploadArquivo();
+	private List<Categoria> source;
+	private List<Categoria> target;
 
 	@PostConstruct
 	public void init() {
-		List<Categoria> source = categoriaDao.buscarTodos();
-		List<Categoria> target = new ArrayList<Categoria>();
+		source = categoriaDao.buscarTodos();
+		target = new ArrayList<Categoria>();
 		categorias = new DualListModel<Categoria>(source, target);
 		refresh();
 	}
@@ -46,7 +48,7 @@ public class ProdutoBean implements Serializable {
 	public void salvar() {
 		try {
 			List<ProdutoCategoria> produtoCategorias = new ArrayList<ProdutoCategoria>();
-			for (Categoria categoria : categorias.getSource()) {
+			for (Categoria categoria : categorias.getTarget()) {
 				ProdutoCategoria pc = new ProdutoCategoria();
 				pc.setCategoria(categoria);
 				pc.setProduto(produto);

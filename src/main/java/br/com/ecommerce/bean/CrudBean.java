@@ -30,6 +30,7 @@ public abstract class CrudBean<T extends IBaseModel, D extends BaseDao> implemen
 			MessageUtil.info("Salvo com Sucesso!");
 			refresh();
 		} catch (Exception e) {
+			System.out.println(e);
 			MessageUtil.error("Erro Inesperado " + e);
 		}
 	}
@@ -40,6 +41,7 @@ public abstract class CrudBean<T extends IBaseModel, D extends BaseDao> implemen
 			MessageUtil.info("Excluido com Sucesso!");
 			refresh();
 		} catch (Exception e) {
+			System.out.println(e);
 			MessageUtil.error("Erro Inesperado" + e);
 		}
 	}

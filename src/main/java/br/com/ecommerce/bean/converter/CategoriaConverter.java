@@ -4,11 +4,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.ecommerce.dao.CategoriaDao;
 import br.com.ecommerce.domain.Categoria;
 
-
+@Named
 public class CategoriaConverter implements Converter {
 
 	@Inject

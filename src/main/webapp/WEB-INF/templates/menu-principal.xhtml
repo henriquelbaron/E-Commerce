@@ -6,19 +6,30 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
+
 <h:form>
+	<p:panelGrid columns="3">
+		<h:commandLink value="(48) 9 9685-0323" target="_blank" />
+		<h:commandLink value="FaceBook" target="_blank" />
+	</p:panelGrid>
+
 	<p:menubar>
-		<p:submenu label="Cadastros" icon="fa fa-save">
-			<p:menuitem value="Categorias" outcome="categoria" />
-			<p:menuitem value="Clientes" outcome="cliente" icon="fa fa-user" />
-			<p:menuitem value="Produtos" outcome="produto" />
+		<p:submenu label=" Cadastros" icon="fa fa-save">
+			<p:menuitem value=" Categorias" outcome="/cadastros/categoria" icon="fa fa-cube" />
+			<p:menuitem value=" Clientes" outcome="/cadastros/cliente" icon="fa fa-user" />
+			<p:menuitem value=" Produtos" outcome="/cadastros/produto" icon="fa fa-barcode" />
 		</p:submenu>
+		<p:menuitem value=" Pesquisa" outcome="/pesquisa" icon="fa fa-barcode" />
 		<f:facet name="options">
 			<p:commandButton type="button" value="Sair" icon="fa fa-home" />
 		</f:facet>
 	</p:menubar>
-	<p:autoComplete value="#{menuSuperiorBean.produtoLinhaEditavel}" completeMethod="#{menuSuperiorBean.ca}">
-	
-	</p:autoComplete>
+</h:form>
+<h:form>
+    Enter Name:
+    <p:autoComplete value="#{menuSuperiorBean.produtoLinhaEditavel}"
+		completeMethod="#{menuSuperiorBean.nameSuggestions}" maxResults="10" />
+
+	<p:commandButton value="Pesquisar" icon="ui-icon-check" />
 </h:form>
 </html>

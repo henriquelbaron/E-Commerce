@@ -24,6 +24,9 @@
 					<f:facet name="footer">
 						<p:commandButton update="formTable:table"
 							action="#{categoriaBean.salvar}" value="Cadastrar" />
+						<p:commandButton update="@form" process="@this"
+							value="Limpar Campos" action="#{categoriaBean.newEntidade}"
+							icon="fa fa-recycle" />
 					</f:facet>
 				</p:panelGrid>
 			</h:form>

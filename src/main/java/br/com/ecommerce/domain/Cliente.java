@@ -1,13 +1,11 @@
 package br.com.ecommerce.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -15,65 +13,35 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
-import br.com.ecommerce.domain.enums.Perfil;
 import br.com.ecommerce.domain.enums.Genero;
+import br.com.ecommerce.domain.enums.Perfil;
 
 @Entity
 @Table(name = "cliente")
-public class Cliente implements IBaseModel, Serializable {
+public class Cliente extends Pessoa {
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@NotBlank
-	private String nome;
-	@Email
-	@NotBlank
-	private String email;
-	@Column(length = 18)
-	@NotBlank
-	private String cpfOuCnpj;
+
 	@NotBlank
 	private String senha;
-	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "idEndereco", nullable = false)
-	private Endereco endereco;
-	
+
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;
-	
+
 	@Column(name = "SEXO")
 	@Enumerated(EnumType.STRING)
 	private Genero sexo;
-	
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "perfis")
 	private Set<Integer> perfis = new HashSet<>();
 
 	public Cliente() {
 		this.pedidos = new ArrayList<>();
-		addPerfil(Perfil.CLIENTE);
-	}
-
-	public Cliente(Long id, String nome, String email, String cpfOuCnpj, String senha) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.email = email;
-		this.cpfOuCnpj = cpfOuCnpj;
-		this.senha = senha;
 		addPerfil(Perfil.CLIENTE);
 	}
 

@@ -24,10 +24,12 @@
 					<f:facet name="header">Cadastro</f:facet>
 
 					<p:outputLabel value="Nome" for="produto" />
-					<p:inputText id="produto" value="#{produtoBean.produto.nome}" />
+					<p:inputText id="produto" value="#{produtoBean.produto.nome}"
+						styleClass="inputs" />
 
 					<p:outputLabel value="Genero" for="genero" />
-					<p:selectOneMenu value="#{produtoBean.produto.genero}" id="genero">
+					<p:selectOneMenu value="#{produtoBean.produto.genero}" id="genero"
+						styleClass="inputs">
 						<f:selectItem itemLabel="Selecione..." itemValue=""
 							noSelectionOption="true" />
 						<f:selectItems value="#{produtoBean.generos}"
@@ -44,25 +46,29 @@
 
 					<p:outputLabel for="precoCompra" value="Preço de Compra" />
 					<p:inputNumber id="precoCompra" maxValue="99999"
-						value="#{produtoBean.produto.precoCompra}" symbol=" R$ " />
+						styleClass="inputs" value="#{produtoBean.produto.precoCompra}"
+						symbol=" R$ " />
 
 					<p:outputLabel for="precoVenda" value="Preço de Venda" />
 					<p:inputNumber id="precoVenda" symbol=" R$ " maxValue="9999999"
-						value="#{produtoBean.produto.precoVenda}" />
+						styleClass="inputs" value="#{produtoBean.produto.precoVenda}" />
 
 					<p:outputLabel for="tamanho" value="Tamanho" />
-					<p:inputText id="tamanho" value="#{produtoBean.produto.tamanho}" />
+					<p:inputText id="tamanho" value="#{produtoBean.produto.tamanho}"
+						styleClass="inputs" />
 
 					<p:outputLabel for="cor" value="Cor" />
-					<p:inputText id="cor" value="#{produtoBean.produto.cor}" />
+					<p:inputText id="cor" value="#{produtoBean.produto.cor}"
+						styleClass="inputs" />
 
 					<p:outputLabel for="quantidade" value="Quantidade" />
-					<p:inputNumber id="quantidade"
+					<p:inputNumber id="quantidade" styleClass="inputs"
 						value="#{produtoBean.produto.quantidade}" decimalPlaces="0" />
 
 					<p:outputLabel for="upload" value="Imagem Produto" />
 					<p:fileUpload fileUploadListener="#{produtoBean.uploadAction}"
-						sizeLimit="5000000" fileLimit="1" auto="true" id="upload" />
+						styleClass="inputs" sizeLimit="5000000" fileLimit="1" auto="true"
+						id="upload" />
 
 					<f:facet name="footer">
 						<p:commandButton update="formTable:table"
@@ -73,24 +79,25 @@
 					</f:facet>
 				</p:panelGrid>
 			</h:form>
-
-			<h:form id="formTable">
+			<p:spacer height="30" />
+			<h:form id="formTable" styleClass="table">
 				<p:dataTable id="table" var="p" value="#{produtoBean.produtos}"
 					emptyMessage="Não a Profissões Cadastradas">
 
 					<f:facet name="header">Profissões Cadastradas</f:facet>
 
-					<p:column headerText="ID">
+					<p:column headerText="ID" styleClass="td-id td-table">
 						<p:outputLabel value="#{p.id}" />
 					</p:column>
 
-					<p:column headerText="produto">
+					<p:column headerText="Produto">
 						<p:outputLabel value="#{p.nome}" />
 					</p:column>
 					<p:column headerText="Imagem">
-						<h:graphicImage value="/images/#{p.imagem}" />
+						<p:commandButton value="Imagem" icon="fa fa-image"
+							action="#{dialogBean.showViewImagem}" />
 					</p:column>
-					<p:column headerText="Ações">
+					<p:column headerText="Ações" styleClass="td-table td-acoes">
 						<p:commandButton icon="fa fa-pencil" update="form">
 							<f:setPropertyActionListener value="#{p}"
 								target="#{produtoBean.produto}" />

@@ -27,12 +27,11 @@ import br.com.ecommerce.domain.enums.Genero;
 
 @Entity
 @Table(name = "produto")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Produto implements IBaseModel, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@NotBlank
 	private String nome;

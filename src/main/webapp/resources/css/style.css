@@ -7,24 +7,31 @@
 }
 
 .table {
-	width:1000px;
+	margin-top: 10px;
+	margin-bottom: 10px; width : 1000px;
 	margin: auto;
+	width: 1000px;
 }
 
+.inputs {
+	width: 100%;
+}
 
 .pessoa-td-acoes {
 	text-align: center;
 	width: 100px;
 }
+
 .pessoa-td-profissao {
 	text-align: center;
 }
 
-.pessoa-td-idade{
+.pessoa-td-idade {
 	text-align: center;
 	width: 80px;
 }
-.pessoa-td-id{
+
+.pessoa-td-id {
 	text-align: center;
 	width: 60px;
 }

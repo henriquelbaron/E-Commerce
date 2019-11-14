@@ -64,6 +64,7 @@ public class ProdutoBean implements Serializable {
 		}
 	}
 
+
 	public void delete() {
 		try {
 			produtoDao.excluir(produto);

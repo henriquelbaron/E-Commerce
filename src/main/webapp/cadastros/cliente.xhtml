@@ -18,9 +18,10 @@
 	</ui:define>
 
 	<ui:define name="cadastro">
-		<div id="content">
-			<h:form class="form" id="form">
-				<p:panelGrid columns="2">
+		<h:form class="form" id="form">
+			<p:panelGrid columns="1">
+				<p:panelGrid columns="2" style="width:100%" columnClasses="label">
+
 					<f:facet name="header">Cadastro</f:facet>
 
 					<p:outputLabel value="Nome" for="nome" />
@@ -35,6 +36,15 @@
 						<p:keyFilter regEx="/[\d]/" />
 					</p:inputText>
 
+					<p:outputLabel value="Nascimento: " for="nascimento" />
+					<p:calendar id="nascimento" widgetVar="calWidget" effect="fade"
+						navigator="true" pattern="dd/MM/yyyy" yearRange="c-100:c+0"
+						maxdate="calWidget.today()" required="true"
+						requiredMessage="Nascimento deve ser preenchido"
+						placeholder="dd/mm/aaaa"
+						value="#{clienteBean.entidade.nascimento}" mask="99/99/9999">
+					</p:calendar>
+
 					<p:outputLabel value="Senha" for="pwd1" />
 					<p:password id="pwd1" value="#{clienteBean.entidade.senha}"
 						match="pwd2" />
@@ -42,10 +52,12 @@
 					<p:outputLabel value="Confirmar Senha" for="pwd2" />
 					<p:password id="pwd2" value="#{clienteBean.confirmarSenha}"
 						required="true" />
+				</p:panelGrid>
 
 
-					<p:outputLabel value="Endereço" />
-					<p:spacer />
+				<p:panelGrid columns="4">
+					<f:facet name="header">Endereço</f:facet>
+
 					<p:outputLabel value="Logradouro" for="logradouro" />
 					<p:inputText id="logradouro"
 						value="#{clienteBean.entidade.endereco.logradouro}" />
@@ -66,67 +78,70 @@
 						value="#{clienteBean.entidade.endereco.cidade}" />
 					<p:outputLabel value="UF" for="uf" />
 					<p:inputText id="uf" value="#{clienteBean.entidade.endereco.uf}" />
-
-					<f:facet name="footer">
-						<p:commandButton update="@form formTable"
-							action="#{clienteBean.salvar}" value="Cadastrar" />
-						<p:commandButton update="form" value="Limpar Campos"
-							process="@this" action="#{clienteBean.newEntidade()}"
-							icon="fa fa-recycle" />
-					</f:facet>
 				</p:panelGrid>
-			</h:form>
-			<h:form id="formTable">
-				<p:dataTable id="table" var="p" value="#{clienteBean.entidades}"
-					emptyMessage="Não a Clientes Cadastrados">
 
-					<f:facet name="header">Clientes Cadastrados</f:facet>
+				<f:facet name="footer">
+					<p:commandButton update="@form formTable mensagem"
+						action="#{clienteBean.salvar}" value="Cadastrar" />
+					<p:commandButton update="@form mensagem" value="Limpar Campos"
+						process="@this" action="#{clienteBean.newEntidade()}"
+						icon="fa fa-recycle" />
+				</f:facet>
+			</p:panelGrid>
+		</h:form>
+		<h:form id="formTable" >
+			<p:dataTable id="table" var="p" value="#{clienteBean.entidades}"
+				emptyMessage="Não a Clientes Cadastrados">
 
-					<p:column headerText="ID">
-						<p:outputLabel value="#{p.id}" />
-					</p:column>
+				<f:facet name="header">Clientes Cadastrados</f:facet>
 
-					<p:column headerText="Nome">
-						<p:outputLabel value="#{p.nome}" />
-					</p:column>
+				<p:column headerText="ID" styleClass="td-id td-table">
+					<p:outputLabel value="#{p.id}" />
+				</p:column>
 
-					<p:column headerText="Cpf/Cnpj">
-						<p:outputLabel value="#{p.cpfOuCnpj}" />
-					</p:column>
+				<p:column headerText="Nome">
+					<p:outputLabel value="#{p.nome}" />
+				</p:column>
 
-					<p:column headerText="Endereço">
-						<p:outputLabel value="#{p.endereco}" />
-					</p:column>
+				<p:column headerText="Cpf/Cnpj">
+					<p:outputLabel value="#{p.cpfOuCnpj}" />
+				</p:column>
+
+				<p:column headerText="Nascimento">
+					<p:outputLabel value="#{p.nascimentoFormatado}" />
+				</p:column>
+
+				<p:column headerText="Endereço">
+					<p:outputLabel value="#{p.endereco}" />
+				</p:column>
 
 
-					<p:column headerText="Ações">
-						<p:commandButton icon="fa fa-pencil" update="form">
-							<f:setPropertyActionListener value="#{p}"
-								target="#{clienteBean.entidade}" />
-						</p:commandButton>
+				<p:column headerText="Ações" styleClass="td-table td-acoes">
+					<p:commandButton icon="fa fa-pencil" update="form">
+						<f:setPropertyActionListener value="#{p}"
+							target="#{clienteBean.entidade}" />
+					</p:commandButton>
 
-						<p:commandButton icon="fa fa-trash"
-							update="@form formTable:confirm"
-							oncomplete="PF('confirm').show()">
-							<f:setPropertyActionListener value="#{p}"
-								target="#{clienteBean.entidade}" />
-						</p:commandButton>
-					</p:column>
-				</p:dataTable>
+					<p:commandButton icon="fa fa-trash"
+						update="@form formTable:confirm" oncomplete="PF('confirm').show()">
+						<f:setPropertyActionListener value="#{p}"
+							target="#{clienteBean.entidade}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
 
-				<p:confirmDialog id="confirm" widgetVar="confirm" header="Atenção!"
-					responsive="true" showEffect="fade" hideEffect="fade"
-					closeOnEscape="true"
-					message="Tem certeza que deseja excluir #{clienteBean.entidade.nome}?">
-					<p:commandButton value="Sim" icon="fa fa-check" update="table"
-						action="#{clienteBean.delete}" oncomplete="PF('confirm').hide()" />
-					<p:commandButton value="Não" icon="fa fa-times"
-						oncomplete="PF('confirm').hide(); return false;" />
-					<!-- /*return false é para não atualizar a pagina*/ -->
-				</p:confirmDialog>
-			</h:form>
+			<p:confirmDialog id="confirm" widgetVar="confirm" header="Atenção!"
+				responsive="true" showEffect="fade" hideEffect="fade"
+				closeOnEscape="true"
+				message="Tem certeza que deseja excluir #{clienteBean.entidade.nome}?">
+				<p:commandButton value="Sim" icon="fa fa-check"
+					update="table mensagem" action="#{clienteBean.delete}"
+					oncomplete="PF('confirm').hide()" />
+				<p:commandButton value="Não" icon="fa fa-times"
+					oncomplete="PF('confirm').hide(); return false;" />
+			</p:confirmDialog>
+		</h:form>
 
-		</div>
 	</ui:define>
 
 

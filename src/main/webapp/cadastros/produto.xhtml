@@ -25,11 +25,11 @@
 
 					<p:outputLabel value="Nome" for="produto" />
 					<p:inputText id="produto" value="#{produtoBean.produto.nome}"
-						styleClass="inputs" />
+						required="true" styleClass="inputs" />
 
 					<p:outputLabel value="Genero" for="genero" />
 					<p:selectOneMenu value="#{produtoBean.produto.genero}" id="genero"
-						styleClass="inputs">
+						required="true" styleClass="inputs">
 						<f:selectItem itemLabel="Selecione..." itemValue=""
 							noSelectionOption="true" />
 						<f:selectItems value="#{produtoBean.generos}"
@@ -39,13 +39,13 @@
 
 					<p:outputLabel value="Categorias" for="pickList" />
 					<p:pickList id="pickList" value="#{produtoBean.categorias}"
-						converter="#{categoriaConverter}" var="cat" itemLabel="#{cat}"
-						itemValue="#{cat}" showSourceFilter="true" showTargetFilter="true"
-						filterMatchMode="contains">
+						required="true" converter="#{categoriaConverter}" var="cat"
+						itemLabel="#{cat}" itemValue="#{cat}" showSourceFilter="true"
+						showTargetFilter="true" filterMatchMode="contains">
 					</p:pickList>
 
 					<p:outputLabel for="precoCompra" value="Preço de Compra" />
-					<p:inputNumber id="precoCompra" maxValue="99999"
+					<p:inputNumber id="precoCompra" maxValue="99999" required="true"
 						styleClass="inputs" value="#{produtoBean.produto.precoCompra}"
 						symbol=" R$ " />
 
@@ -55,23 +55,31 @@
 
 					<p:outputLabel for="tamanho" value="Tamanho" />
 					<p:inputText id="tamanho" value="#{produtoBean.produto.tamanho}"
-						styleClass="inputs" />
+						required="true" styleClass="inputs" />
 
 					<p:outputLabel for="cor" value="Cor" />
 					<p:inputText id="cor" value="#{produtoBean.produto.cor}"
 						styleClass="inputs" />
 
 					<p:outputLabel for="quantidade" value="Quantidade" />
-					<p:inputNumber id="quantidade" styleClass="inputs"
-						value="#{produtoBean.produto.quantidade}" decimalPlaces="0" />
+					<p:inputNumber id="quantidade" styleClass="inputs" required="true"
+						minValue="0" value="#{produtoBean.produto.quantidade}"
+						decimalPlaces="0" />
 
 					<p:outputLabel for="upload" value="Imagem Produto" />
 					<p:fileUpload fileUploadListener="#{produtoBean.uploadAction}"
 						styleClass="inputs" sizeLimit="5000000" fileLimit="1" auto="true"
 						id="upload" />
 
+					<p:outputLabel for="fornecedor" value="Fornecedor" />
+					<p:autoComplete value="#{produtoBean.produto.fornecedor}"
+						id="fornecedor" converter="#{fornecedorConverter}"
+						completeMethod="#{produtoBean.nameSuggestions}" maxResults="10"
+						emptyMessage="Não há nenhum Fornecedor com este Nome!"
+						required="true" />
+
 					<f:facet name="footer">
-						<p:commandButton update="formTable:table"
+						<p:commandButton update="formTable:table @form mensagem"
 							action="#{produtoBean.salvar}" value="Cadastrar" />
 						<p:commandButton update="@form" process="@this"
 							value="Limpar Campos" action="#{produtoBean.refresh}"
@@ -93,10 +101,19 @@
 					<p:column headerText="Produto">
 						<p:outputLabel value="#{p.nome}" />
 					</p:column>
-					<p:column headerText="Imagem">
-						<p:commandButton value="Imagem" icon="fa fa-image"
-							action="#{dialogBean.showViewImagem}" />
+
+					<p:column headerText="P/Compra">
+						<p:outputLabel value="#{p.precoCompraFormatado()}" />
 					</p:column>
+
+					<p:column headerText="P/Venda">
+						<p:outputLabel value="#{p.precoVendaFormatado()}" symbol="R$ " />
+					</p:column>
+
+					<p:column headerText="Imagem">
+						<h:graphicImage value="/images/#{p.imagem}" />
+					</p:column>
+
 					<p:column headerText="Ações" styleClass="td-table td-acoes">
 						<p:commandButton icon="fa fa-pencil" update="form">
 							<f:setPropertyActionListener value="#{p}"
@@ -104,7 +121,7 @@
 						</p:commandButton>
 
 						<p:commandButton icon="fa fa-trash"
-							update="@form formTable:confirm"
+							update="@form formTable:confirm mensagem"
 							oncomplete="PF('confirm').show()">
 							<f:setPropertyActionListener value="#{p}"
 								target="#{produtoBean.produto}" />
@@ -120,7 +137,6 @@
 						action="#{produtoBean.delete}" oncomplete="PF('confirm').hide()" />
 					<p:commandButton value="Não" icon="fa fa-times"
 						oncomplete="PF('confirm').hide(); return false;" />
-					<!-- /*return false é para não atualizar a pagina*/ -->
 				</p:confirmDialog>
 			</h:form>
 		</div>

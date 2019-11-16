@@ -18,7 +18,8 @@
 	<ui:include src="/WEB-INF/templates/menu-principal.xhtml" />
 	<p:spacer height="30" />
 
-	<p:growl autoUpdate=" true" />
-	<ui:insert name="cadastro"></ui:insert>
+	<p:growl id="mensagem" />
+	<ui:insert name="cadastro" />
+	<ui:insert name="conteudo" />
 </h:body>
 </html>

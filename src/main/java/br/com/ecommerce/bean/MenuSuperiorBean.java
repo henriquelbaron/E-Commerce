@@ -20,7 +20,6 @@ public class MenuSuperiorBean extends CrudBean<Produto, ProdutoDao> {
 	private ProdutoDao produtoDao;
 	private List<Produto> produtos;
 	private Produto produto;
-	private Produto produtoLinhaEditavel;
 
 	@PostConstruct
 	public void init() {
@@ -40,12 +39,8 @@ public class MenuSuperiorBean extends CrudBean<Produto, ProdutoDao> {
 
 	public List<String> nameSuggestions(String enteredValue) {
 		List<String> matches = new ArrayList<>();
-		// using data factory for getting suggestions
-		for (Produto s : produtos) {
-			if (s.getNome().toLowerCase().startsWith(enteredValue.toLowerCase())) {
-				matches.add(s.getNome());
-			}
-		}
+		produtos.stream().filter(p -> p.getNome().toLowerCase().contains(enteredValue.toLowerCase()))
+				.forEach(p -> matches.add(p.getNome()));
 		return matches;
 	}
 
@@ -63,14 +58,6 @@ public class MenuSuperiorBean extends CrudBean<Produto, ProdutoDao> {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
-	}
-
-	public Produto getProdutoLinhaEditavel() {
-		return produtoLinhaEditavel;
-	}
-
-	public void setProdutoLinhaEditavel(Produto produtoLinhaEditavel) {
-		this.produtoLinhaEditavel = produtoLinhaEditavel;
 	}
 
 }

@@ -16,47 +16,55 @@
 	<ui:define name="cadastro">
 		<div id="content">
 			<h:form class="form" id="form">
-				<p:panelGrid columns="2">
-					<f:facet name="header">Cadastro</f:facet>
+				<p:panelGrid columns="1">
+					<p:panelGrid columns="2" style="width:100%" columnClasses="label">
+						<f:facet name="header">Cadastro</f:facet>
 
-					<p:outputLabel value="Razão Social" for="nome" />
-					<p:inputText id="nome" value="#{fornecedorBean.entidade.nome}" />
+						<p:outputLabel value="Razão Social" for="nome" />
+						<p:inputText id="nome" value="#{fornecedorBean.entidade.nome}" />
 
-					<p:outputLabel value="E-mail" for="email" />
-					<p:inputText id="email" value="#{fornecedorBean.entidade.email}" />
+						<p:outputLabel value="E-mail" for="email" />
+						<p:inputText id="email" value="#{fornecedorBean.entidade.email}" />
 
-					<p:outputLabel value="Telefone" for="telefone" />
-					<p:inputMask id="telefone" value="#{fornecedorBean.entidade.telefone}" mask="(99) 9999-9999" />
+						<p:outputLabel value="Telefone" for="telefone" />
+						<p:inputMask id="telefone"
+							value="#{fornecedorBean.entidade.telefone}" mask="(99) 9999-9999" />
 
-					<p:outputLabel value="Cnpj" for="cnpj" />
-					<p:inputMask id="cnpj" value="#{fornecedorBean.entidade.cpfOuCnpj}"
-						mask="99.999.999/9999-99" />
+						<p:outputLabel value="Cnpj" for="cnpj" />
+						<p:inputMask id="cnpj"
+							value="#{fornecedorBean.entidade.cpfOuCnpj}"
+							mask="99.999.999/9999-99" />
+					</p:panelGrid>
 
-					<p:outputLabel value="Endereço" />
-					<p:spacer />
-					<p:outputLabel value="Logradouro" for="logradouro" />
-					<p:inputText id="logradouro"
-						value="#{fornecedorBean.entidade.endereco.logradouro}" />
-					<p:outputLabel value="N°" for="numero" />
-					<p:inputText id="numero"
-						value="#{fornecedorBean.entidade.endereco.numero}" />
-					<p:outputLabel value="Complemento" for="complemento" />
-					<p:inputText id="complemento"
-						value="#{fornecedorBean.entidade.endereco.complemento}" />
-					<p:outputLabel value="Bairro" for="bairro" />
-					<p:inputText id="bairro"
-						value="#{fornecedorBean.entidade.endereco.bairro}" />
-					<p:outputLabel value="CEP" for="cep" />
-					<p:inputMask id="cep"
-						value="#{fornecedorBean.entidade.endereco.cep}" mask="99999-999" />
-					<p:outputLabel value="Cidade" for="cidade" />
-					<p:inputText id="cidade"
-						value="#{fornecedorBean.entidade.endereco.cidade}" />
-					<p:outputLabel value="UF" for="uf" />
-					<p:inputText id="uf" value="#{fornecedorBean.entidade.endereco.uf}" />
+
+					<p:panelGrid columns="4">
+						<f:facet name="header">Endereço</f:facet>
+						<p:outputLabel value="Logradouro" for="logradouro" />
+						<p:inputText id="logradouro"
+							value="#{fornecedorBean.entidade.endereco.logradouro}" />
+						<p:outputLabel value="N°" for="numero" />
+						<p:inputText id="numero"
+							value="#{fornecedorBean.entidade.endereco.numero}" />
+						<p:outputLabel value="Complemento" for="complemento" />
+						<p:inputText id="complemento"
+							value="#{fornecedorBean.entidade.endereco.complemento}" />
+						<p:outputLabel value="Bairro" for="bairro" />
+						<p:inputText id="bairro"
+							value="#{fornecedorBean.entidade.endereco.bairro}" />
+						<p:outputLabel value="CEP" for="cep" />
+						<p:inputMask id="cep"
+							value="#{fornecedorBean.entidade.endereco.cep}" mask="99999-999" />
+						<p:outputLabel value="Cidade" for="cidade" />
+						<p:inputText id="cidade"
+							value="#{fornecedorBean.entidade.endereco.cidade}" />
+						<p:outputLabel value="UF" for="uf" />
+						<p:inputText id="uf"
+							value="#{fornecedorBean.entidade.endereco.uf}" />
+					</p:panelGrid>
+
 
 					<f:facet name="footer">
-						<p:commandButton update="@form formTable"
+						<p:commandButton update="@form formTable mensagem"
 							action="#{fornecedorBean.salvar}" value="Cadastrar" />
 						<p:commandButton update="form" value="Limpar Campos"
 							process="@this" action="#{fornecedorBean.newEntidade()}"
@@ -88,13 +96,13 @@
 
 
 					<p:column headerText="Ações">
-						<p:commandButton icon="fa fa-pencil" update="form">
+						<p:commandButton icon="fa fa-pencil" update="form mensagem">
 							<f:setPropertyActionListener value="#{p}"
 								target="#{fornecedorBean.entidade}" />
 						</p:commandButton>
 
 						<p:commandButton icon="fa fa-trash"
-							update="@form formTable:confirm"
+							update="@form formTable:confirm mensagem"
 							oncomplete="PF('confirm').show()">
 							<f:setPropertyActionListener value="#{p}"
 								target="#{fornecedorBean.entidade}" />
@@ -106,8 +114,8 @@
 					responsive="true" showEffect="fade" hideEffect="fade"
 					closeOnEscape="true"
 					message="Tem certeza que deseja excluir #{fornecedorBean.entidade.nome}?">
-					<p:commandButton value="Sim" icon="fa fa-check" update="table"
-						action="#{fornecedorBean.delete}"
+					<p:commandButton value="Sim" icon="fa fa-check"
+						update="table mensagem" action="#{fornecedorBean.delete}"
 						oncomplete="PF('confirm').hide()" />
 					<p:commandButton value="Não" icon="fa fa-times"
 						oncomplete="PF('confirm').hide(); return false;" />

@@ -15,8 +15,10 @@ import org.primefaces.model.DualListModel;
 import br.com.ecommerce.bean.util.MessageUtil;
 import br.com.ecommerce.bean.util.UploadArquivo;
 import br.com.ecommerce.dao.CategoriaDao;
+import br.com.ecommerce.dao.FornecedorDao;
 import br.com.ecommerce.dao.ProdutoDao;
 import br.com.ecommerce.domain.Categoria;
+import br.com.ecommerce.domain.Fornecedor;
 import br.com.ecommerce.domain.Produto;
 import br.com.ecommerce.domain.ProdutoCategoria;
 import br.com.ecommerce.domain.enums.Genero;
@@ -30,19 +32,32 @@ public class ProdutoBean implements Serializable {
 	private CategoriaDao categoriaDao;
 	@Inject
 	private ProdutoDao produtoDao;
+	@Inject
+	private FornecedorDao fornecedorDao;
+	private List<Fornecedor> fornecedores;
 	private List<Produto> produtos;
-	private Produto produto;
 	private DualListModel<Categoria> categorias;
-	private UploadArquivo fileUtil = new UploadArquivo();
 	private List<Categoria> source;
 	private List<Categoria> target;
+	private Fornecedor fornecedor;
+	private Produto produto;
+	private UploadArquivo fileUtil;
 
 	@PostConstruct
 	public void init() {
+		fileUtil = new UploadArquivo();
+		fornecedores = fornecedorDao.buscarTodos();
 		source = categoriaDao.buscarTodos();
 		target = new ArrayList<Categoria>();
 		categorias = new DualListModel<Categoria>(source, target);
 		refresh();
+	}
+
+	public List<String> nameSuggestions(String enteredValue) {
+		List<String> matches = new ArrayList<>();
+		fornecedores.stream().filter(f -> f.getNome().toLowerCase().contains(enteredValue.toLowerCase()))
+				.forEach(f -> matches.add(f.getNome()));
+		return matches;
 	}
 
 	public void salvar() {
@@ -64,7 +79,6 @@ public class ProdutoBean implements Serializable {
 		}
 	}
 
-
 	public void delete() {
 		try {
 			produtoDao.excluir(produto);
@@ -83,6 +97,22 @@ public class ProdutoBean implements Serializable {
 	public void uploadAction(FileUploadEvent event) {
 		fileUtil.fileUpload(event, ".jpg", "/images/");
 		produto.setImagem(this.fileUtil.getNome());
+	}
+
+	public List<Fornecedor> getFornecedores() {
+		return fornecedores;
+	}
+
+	public void setFornecedores(List<Fornecedor> fornecedores) {
+		this.fornecedores = fornecedores;
+	}
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 	public Genero[] getGeneros() {

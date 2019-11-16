@@ -1,12 +1,35 @@
 package br.com.ecommerce.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "fornecedor")
 public class Fornecedor extends Pessoa {
 	private static final long serialVersionUID = 1L;
+
+	@OneToMany(mappedBy = "fornecedor")
+	private List<Produto> produtos;
+
+	public Fornecedor() {
+		produtos = new ArrayList<>();
+	}
+
+	public void addProdutos(Produto produto) {
+		this.produtos.add(produto);
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
 
 	@Override
 	public Long getId() {

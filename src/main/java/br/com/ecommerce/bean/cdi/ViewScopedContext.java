@@ -97,6 +97,7 @@ public class ViewScopedContext implements Context, SystemEventListener {
 	 * 
 	 * @see javax.faces.event.SystemEventListener#processEvent(javax.faces.event.SystemEvent)
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void processEvent(final SystemEvent event) {
 		if (event instanceof PreDestroyViewMapEvent) {

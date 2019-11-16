@@ -4,16 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.event.FileUploadEvent;
 
 public class UploadArquivo {
 
-	private String diretorio;
 	private String caminho;
 	private byte[] arquivo;
 	private String nome;
@@ -27,8 +24,8 @@ public class UploadArquivo {
 	}
 
 	public String getRealPath() throws IOException {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
+//		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+//		HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
 		FacesContext aFacesContext = FacesContext.getCurrentInstance();
 		ServletContext context = (ServletContext) aFacesContext.getExternalContext().getContext();
 		return context.getRealPath("/");

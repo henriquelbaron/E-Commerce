@@ -1,26 +1,31 @@
 package br.com.ecommerce.bean.converter;
 
+import java.util.List;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.ecommerce.dao.CategoriaDao;
-import br.com.ecommerce.domain.Categoria;
-import br.com.ecommerce.util.NumberUtils;
+import br.com.ecommerce.dao.ProdutoDao;
+import br.com.ecommerce.domain.Produto;
 
 @Named
-public class CategoriaConverter implements Converter {
+public class ProdutoConverter implements Converter {
 
 	@Inject
-	private CategoriaDao dao;
+	private ProdutoDao dao;
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		Categoria retorno = null;
+		Produto retorno = null;
 		if (value != null) {
-			retorno = dao.buscarPorID(NumberUtils.stringToLong(value));
+			List<Produto> produtos = dao.getProdutoPorNome(value);
+			for (Produto Produto : produtos) {
+				if (Produto.getNome().equals(value.trim()))
+					return Produto;
+			}
 		}
 		return retorno;
 	}
@@ -28,7 +33,7 @@ public class CategoriaConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
-			return ((Categoria) value).getId().toString();
+			return ((Produto) value).getId().toString();
 		}
 		return "";
 	}

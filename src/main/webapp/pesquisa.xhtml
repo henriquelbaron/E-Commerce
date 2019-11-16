@@ -7,11 +7,40 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="styleCss">
-		<h:outputStylesheet library="css" name="cadastroStyle.css"
+		<h:outputStylesheet library="css" name="listagemProdutos.css"
 			target="head" />
 	</ui:define>
 
 	<ui:define name="titulo">Cadastro de Categorias</ui:define>
-	
-	
+	<ui:define name="conteudo">
+		<h:form>
+
+			<p:dataScroller value="#{menuSuperiorBean.produtos}" var="p"
+				chunkSize="10">
+				<f:facet name="header">
+            Produtos
+        </f:facet>
+				<h:panelGrid columns="2" style="width:100%"
+					columnClasses="logo,detail">
+					<h:graphicImage value="/images/#{p.imagem}" />
+
+					<p:outputPanel>
+						<h:panelGrid columns="2" cellpadding="5">
+							<h:outputText value="Nome:" />
+							<h:outputText value="#{p.nome}" style="font-weight: bold" />
+
+							<h:outputText value="Valor:" />
+							<h:outputText value="#{p.precoVendaFormatado()}"
+								style="font-weight: bold" />
+
+							<p:commandButton value="+" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</h:panelGrid>
+			</p:dataScroller>
+		</h:form>
+	</ui:define>
+
+
+
 </ui:decorate>

@@ -9,6 +9,7 @@ import br.com.ecommerce.bean.util.MessageUtil;
 import br.com.ecommerce.dao.BaseDao;
 import br.com.ecommerce.domain.IBaseModel;
 
+@SuppressWarnings("rawtypes")
 public abstract class CrudBean<T extends IBaseModel, D extends BaseDao> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -24,28 +25,33 @@ public abstract class CrudBean<T extends IBaseModel, D extends BaseDao> implemen
 		refresh();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void salvar() {
 		try {
 			getDao().saveOrUpdate(entidade);
 			MessageUtil.info("Salvo com Sucesso!");
-			refresh();
 		} catch (Exception e) {
 			System.out.println(e);
-			MessageUtil.error("Erro Inesperado " + e);
+			MessageUtil.error("Erro " + e);
+		} finally {
+			refresh();
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void delete() {
 		try {
 			getDao().excluir(entidade);
 			MessageUtil.info("Excluido com Sucesso!");
-			refresh();
 		} catch (Exception e) {
 			System.out.println(e);
-			MessageUtil.error("Erro Inesperado" + e);
+			MessageUtil.error("Erro " + e);
+		} finally {
+			refresh();
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void refresh() {
 		entidade = newEntidade();
 		entidades = getDao().buscarTodos();

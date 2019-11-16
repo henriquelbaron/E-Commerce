@@ -38,6 +38,8 @@ public abstract class Pessoa implements IBaseModel, Serializable {
 	@JoinColumn(name = "idEndereco", nullable = false)
 	protected Endereco endereco;
 
+
+
 	public String getNome() {
 		return nome;
 	}

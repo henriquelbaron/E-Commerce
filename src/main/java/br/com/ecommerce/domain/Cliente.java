@@ -1,6 +1,7 @@
 package br.com.ecommerce.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,11 +16,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.ecommerce.domain.enums.Genero;
 import br.com.ecommerce.domain.enums.Perfil;
+import br.com.ecommerce.util.DateUtils;
 
 @Entity
 @Table(name = "cliente")
@@ -28,6 +32,8 @@ public class Cliente extends Pessoa {
 
 	@NotBlank
 	private String senha;
+	@Temporal(TemporalType.DATE)
+	protected Date nascimento;
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;
@@ -47,6 +53,18 @@ public class Cliente extends Pessoa {
 
 	public Set<Perfil> getPerfis() {
 		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+
+	public String getNascimentoFormatado() {
+		return DateUtils.getFormatadorDataBrasil().format(nascimento);
+	}
+
+	public Date getNascimento() {
+		return nascimento;
+	}
+
+	public void setNascimento(Date nascimento) {
+		this.nascimento = nascimento;
 	}
 
 	public Genero getSexo() {

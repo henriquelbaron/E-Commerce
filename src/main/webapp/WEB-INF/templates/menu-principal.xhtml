@@ -12,25 +12,35 @@
 		<h:commandLink value="(48) 9 9685-0323" target="_blank" />
 		<h:commandLink value="FaceBook" target="_blank" />
 	</p:panelGrid>
+	<p:graphicImage url="/resources/imagens/imagem-topo.jpg" height="200px"
+		width="100%" />
 
 	<p:menubar>
 		<p:submenu label=" Cadastros" icon="fa fa-save">
-			<p:menuitem value=" Categorias" outcome="/cadastros/categoria" icon="fa fa-cube" />
-			<p:menuitem value=" Clientes" outcome="/cadastros/cliente" icon="fa fa-user" />
-			<p:menuitem value=" Fornecedores" outcome="/cadastros/fornecedor" icon="fa fa-user" />
-			<p:menuitem value=" Produtos" outcome="/cadastros/produto" icon="fa fa-barcode" />
+			<p:menuitem value=" Categorias" outcome="/cadastros/categoria"
+				icon="fa fa-cube" />
+			<p:menuitem value=" Clientes" outcome="/cadastros/cliente"
+				icon="fa fa-user" />
+			<p:menuitem value=" Fornecedores" outcome="/cadastros/fornecedor"
+				icon="fa fa-user" />
+			<p:menuitem value=" Produtos" outcome="/cadastros/produto"
+				icon="fa fa-barcode" />
 		</p:submenu>
 		<p:menuitem value=" Pesquisa" outcome="/pesquisa" icon="fa fa-barcode" />
+		<p:menuitem value=" DashBoard" outcome="/dashboard"
+			icon="fa fa-columns" />
 		<f:facet name="options">
 			<p:commandButton type="button" value="Sair" icon="fa fa-home" />
 		</f:facet>
 	</p:menubar>
 </h:form>
 <h:form>
-    Enter Name:
-    <p:autoComplete value="#{menuSuperiorBean.produtoLinhaEditavel}"
-		completeMethod="#{menuSuperiorBean.nameSuggestions}" maxResults="10" />
+	<p:autoComplete value="#{menuSuperiorBean.produto}"
+		placeholder="Pesquisar Produto"
+		completeMethod="#{menuSuperiorBean.nameSuggestions}" maxResults="10"
+		converter="#{fornecedorConverter}" />
+	<p:commandButton value="Pesquisar" icon="ui-icon-check"
+		action="/pesquisa.xhtml" />
 
-	<p:commandButton value="Pesquisar" icon="ui-icon-check" />
 </h:form>
 </html>

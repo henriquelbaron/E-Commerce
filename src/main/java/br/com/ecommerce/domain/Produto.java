@@ -14,16 +14,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Lob;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.ecommerce.domain.enums.Genero;
+import br.com.ecommerce.util.NumberUtils;
 
 @Entity
 @Table(name = "produto")
@@ -40,14 +39,15 @@ public class Produto implements IBaseModel, Serializable {
 	private Long quantidade;
 	@Enumerated(EnumType.STRING)
 	private Genero genero;
-	@NotBlank
 	private String tamanho;
 	private String cor;
 	private String imagem;
-	@NotNull
+	@Column(nullable = false)
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
 	private List<ProdutoCategoria> categorias = new ArrayList<>();
-
+	@ManyToOne
+	@JoinColumn(name = "idFornecedor", nullable = false)
+	private Fornecedor fornecedor;
 	@OneToMany(mappedBy = "produto")
 	private Set<ItemPedido> itens = new HashSet<>();
 
@@ -67,6 +67,28 @@ public class Produto implements IBaseModel, Serializable {
 	}
 
 	public Produto() {
+	}
+
+	public String precoCompraFormatado() {
+		String retorno = "R$ ";
+		if (this.precoCompra != null)
+			retorno += NumberUtils.doubleToString(this.precoCompra);
+		return retorno;
+	}
+
+	public String precoVendaFormatado() {
+		String retorno = "R$ ";
+		if (this.precoVenda != null)
+			retorno += NumberUtils.doubleToString(this.precoVenda);
+		return retorno;
+	}
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 	public void addCategoria(ProdutoCategoria categoria) {

@@ -16,20 +16,33 @@
 		width="100%" />
 
 	<p:menubar>
-		<p:submenu label=" Cadastros" icon="fa fa-save">
-			<p:menuitem value=" Categorias" outcome="/cadastros/categoria"
-				icon="fa fa-cube" />
-			<p:menuitem value=" Clientes" outcome="/cadastros/cliente"
-				icon="fa fa-user" />
-			<p:menuitem value=" Fornecedores" outcome="/cadastros/fornecedor"
-				icon="fa fa-user" />
-			<p:menuitem value=" Produtos" outcome="/cadastros/produto"
-				icon="fa fa-barcode" />
+		<p:submenu label="#{msg['menu.cadastro']}" icon="fa fa-save">
+			<p:menuitem value="#{msg['menuitem.categoria']}"
+				outcome="/cadastros/categoria" icon="fa fa-cube" />
+			<p:menuitem value="#{msg['menuitem.cliente']}"
+				outcome="/cadastros/cliente" icon="fa fa-user" />
+			<p:menuitem value="#{msg['menuitem.fornecedor']}"
+				outcome="/cadastros/fornecedor" icon="fa fa-user" />
+			<p:menuitem value="#{msg['menuitem.produto']}"
+				outcome="/cadastros/produto" icon="fa fa-barcode" />
 		</p:submenu>
-		<p:menuitem value=" Pesquisa" outcome="/pesquisa" icon="fa fa-barcode" />
-		<p:menuitem value=" DashBoard" outcome="/dashboard"
+		<p:menuitem value="#{msg['menu.pesquisar']}" outcome="/pesquisa"
+			icon="fa fa-barcode" />
+		<p:menuitem value="#{msg['menu.dashboard']}" outcome="/dashboard"
 			icon="fa fa-columns" />
 		<f:facet name="options">
+			<h:commandButton title="Português" styleClass="bandeira-idioma"
+				image="resources/imagens/brazil-flag.png">
+
+				<f:setPropertyActionListener value="pt"
+					target="#{idiomaBean.idiomaSelecionado}" />
+			</h:commandButton>
+			<h:commandButton title="Inglês" styleClass="bandeira-idioma"
+				image="resources/imagens/england-flag.png">
+
+				<f:setPropertyActionListener value="en"
+					target="#{idiomaBean.idiomaSelecionado}" />
+			</h:commandButton>
 			<p:commandButton type="button" value="Sair" icon="fa fa-home" />
 		</f:facet>
 	</p:menubar>

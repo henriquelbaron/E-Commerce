@@ -28,5 +28,4 @@ public class FornecedorBean extends CrudBean<Fornecedor, FornecedorDao> {
 		return fornecedor;
 	}
 
-
 }

@@ -13,7 +13,7 @@ import br.com.ecommerce.domain.IBaseModel;
 public abstract class CrudBean<T extends IBaseModel, D extends BaseDao> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private T entidade;
+	protected T entidade;
 	private List<T> entidades;
 
 	public void novo() {

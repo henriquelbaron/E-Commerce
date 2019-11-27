@@ -11,41 +11,41 @@
 			target="head" />
 	</ui:define>
 
-	<ui:define name="titulo">Cadastro de Categorias</ui:define>
+	<ui:define name="titulo">#{msg['titulo.cadastro.categoria']}</ui:define>
 	<ui:define name="cadastro">
 		<div id="content">
 			<h:form class="form" id="form">
 				<p:panelGrid columns="2">
-					<f:facet name="header">Cadastro</f:facet>
+					<f:facet name="header">#{msg['cadastro.categoria']}</f:facet>
 
-					<p:outputLabel value="Categoria" for="categoria" />
+					<p:outputLabel value="#{msg['cadastro.nome']}" for="categoria" />
 					<p:inputText id="categoria" value="#{categoriaBean.entidade.nome}" />
 
 					<f:facet name="footer">
 						<p:commandButton update="formTable:table @form mensagem"
-							action="#{categoriaBean.salvar}" value="Cadastrar" />
+							action="#{msg['cadastro.botao.cadastrar']}" value="Cadastrar" />
 						<p:commandButton update="@form" process="@this"
-							value="Limpar Campos" action="#{categoriaBean.newEntidade}"
-							icon="fa fa-recycle" />
+							value="#{msg['cadastro.botao.limpar']}"
+							action="#{categoriaBean.newEntidade}" icon="fa fa-recycle" />
 					</f:facet>
 				</p:panelGrid>
 			</h:form>
 
 			<h:form id="formTable" styleClass="table">
 				<p:dataTable id="table" var="p" value="#{categoriaBean.entidades}"
-					emptyMessage="Não a Categorias Cadastradas">
+					emptyMessage="#{msg['cadastro.table.categoria.vazio']}">
 
-					<f:facet name="header">Categorias Cadastradas</f:facet>
+					<f:facet name="header">#{msg['cadastro.table.categoria.vazio']}</f:facet>
 
 					<p:column headerText="ID" styleClass="td-id td-table">
 						<p:outputLabel value="#{p.id}" />
 					</p:column>
 
-					<p:column headerText="Categoria" styleClass="td-table td-nome">
+					<p:column headerText="#{msg['cadastro.table.column.nome']}" styleClass="td-table td-nome">
 						<p:outputLabel value="#{p.nome}" />
 					</p:column>
 
-					<p:column headerText="Ações" styleClass="td-table td-acoes">
+					<p:column headerText="#{msg['cadastro.table.column.acao']}" styleClass="td-table td-acoes">
 						<p:commandButton icon="fa fa-pencil" update="form">
 							<f:setPropertyActionListener value="#{p}"
 								target="#{categoriaBean.entidade}" />
@@ -60,15 +60,15 @@
 					</p:column>
 				</p:dataTable>
 
-				<p:confirmDialog id="confirm" widgetVar="confirm" header="Atenção!"
+				<p:confirmDialog id="confirm" widgetVar="confirm" header="#{msg['cadastro.atencao']}"
 					responsive="true" showEffect="fade" hideEffect="fade"
 					closeOnEscape="true"
-					message="Tem certeza que deseja excluir #{categoriaBean.entidade.nome}?">
-					<p:commandButton value="Sim" icon="fa fa-check" update="table mensagem"
-						action="#{categoriaBean.delete}" oncomplete="PF('confirm').hide()" />
-					<p:commandButton value="Não" icon="fa fa-times"
+					message="#{msg['cadastro.confirmarExclusao']} #{categoriaBean.entidade.nome}?">
+					<p:commandButton value="#{msg['cadastro.sim']}" icon="fa fa-check"
+						update="table mensagem" action="#{categoriaBean.delete}"
+						oncomplete="PF('confirm').hide()" />
+					<p:commandButton value="#{msg['cadastro.nao']}" icon="fa fa-times"
 						oncomplete="PF('confirm').hide(); return false;" />
-					<!-- /*return false é para não atualizar a pagina*/ -->
 				</p:confirmDialog>
 			</h:form>
 		</div>

@@ -4,6 +4,10 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
 
+	<listener>
+		<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+	</listener>
+
 	<display-name>E-Commerce</display-name>
 
 	<context-param>
@@ -20,6 +24,7 @@
 		<param-name>primefaces.THEME</param-name>
 		<param-value>omega</param-value>
 	</context-param>
+	
 	<context-param>
 		<param-name>timezone</param-name>
 		<param-value>GMT-3</param-value>
@@ -31,12 +36,10 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
+
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
-	<welcome-file-list>
-		<welcome-file>index.xhtml</welcome-file>
-	</welcome-file-list>
 </web-app>

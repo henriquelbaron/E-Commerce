@@ -7,14 +7,17 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="titulo">Dashboard</ui:define>
-
+	<ui:define name="styleCss">
+		<h:outputStylesheet library="css" name="cadastroStyle.css"
+			target="head" />
+	</ui:define>
 	<ui:define name="cadastro">
 		<div class="ui-g">
 			<div class="ui-g-12 ui-md-6 ui-lg-4">
 				<p:pieChart model="#{dashboardBean.produtosPorCategoriaModel}" />
 			</div>
 		</div>
-		
+
 	</ui:define>
 
 </ui:composition>

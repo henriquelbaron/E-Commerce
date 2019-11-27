@@ -6,7 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="titulo">Cadastro de produtos</ui:define>
+	<ui:define name="titulo">#{msg['titulo.cadastro.produto']}</ui:define>
 
 	<ui:define name="scripts">
 		<h:outputScript library="js" name="mascaraMonetaria.js" target="head" />
@@ -21,100 +21,106 @@
 		<div id="content" class="content">
 			<h:form class="form" id="form">
 				<p:panelGrid columns="2">
-					<f:facet name="header">Cadastro</f:facet>
+					<f:facet name="header">#{msg['cadastro.produto']}</f:facet>
 
-					<p:outputLabel value="Nome" for="produto" />
+					<p:outputLabel value="#{msg['cadastro.nome']}" for="produto" />
 					<p:inputText id="produto" value="#{produtoBean.produto.nome}"
 						required="true" styleClass="inputs" />
 
-					<p:outputLabel value="Genero" for="genero" />
+					<p:outputLabel value="#{msg['cadastro.genero']}" for="genero" />
 					<p:selectOneMenu value="#{produtoBean.produto.genero}" id="genero"
 						required="true" styleClass="inputs">
-						<f:selectItem itemLabel="Selecione..." itemValue=""
-							noSelectionOption="true" />
+						<f:selectItem itemLabel="#{msg['cadastro.selecione']}"
+							itemValue="" noSelectionOption="true" />
 						<f:selectItems value="#{produtoBean.generos}"
 							itemValue="#{genero}" var="genero"
 							itemLabel="#{genero.descricao}" />
 					</p:selectOneMenu>
 
-					<p:outputLabel value="Categorias" for="pickList" />
+					<p:outputLabel value="#{msg['menuitem.categoria']}" for="pickList" />
 					<p:pickList id="pickList" value="#{produtoBean.categorias}"
 						required="true" converter="#{categoriaConverter}" var="cat"
 						itemLabel="#{cat}" itemValue="#{cat}" showSourceFilter="true"
 						showTargetFilter="true" filterMatchMode="contains">
 					</p:pickList>
 
-					<p:outputLabel for="precoCompra" value="Preço de Compra" />
+					<p:outputLabel for="precoCompra"
+						value="#{msg['cadastro.precoCompra']}" />
 					<p:inputNumber id="precoCompra" maxValue="99999" required="true"
 						styleClass="inputs" value="#{produtoBean.produto.precoCompra}"
-						symbol=" R$ " />
+						symbol="#{msg['cadastro.simboloDinheiro']}" />
 
-					<p:outputLabel for="precoVenda" value="Preço de Venda" />
-					<p:inputNumber id="precoVenda" symbol=" R$ " maxValue="9999999"
+					<p:outputLabel for="precoVenda"
+						value="#{msg['cadastro.precoVenda']}" />
+					<p:inputNumber id="precoVenda"
+						symbol="#{msg['cadastro.simboloDinheiro']}" maxValue="9999999"
 						styleClass="inputs" value="#{produtoBean.produto.precoVenda}" />
 
-					<p:outputLabel for="tamanho" value="Tamanho" />
+					<p:outputLabel for="tamanho" value="#{msg['cadastro.tamanho']}" />
 					<p:inputText id="tamanho" value="#{produtoBean.produto.tamanho}"
 						required="true" styleClass="inputs" />
 
-					<p:outputLabel for="cor" value="Cor" />
+					<p:outputLabel for="cor" value="#{msg['cadastro.cor']}" />
 					<p:inputText id="cor" value="#{produtoBean.produto.cor}"
 						styleClass="inputs" />
 
-					<p:outputLabel for="quantidade" value="Quantidade" />
+					<p:outputLabel for="quantidade"
+						value="#{msg['cadastro.quantidade']}" />
 					<p:inputNumber id="quantidade" styleClass="inputs" required="true"
 						minValue="0" value="#{produtoBean.produto.quantidade}"
 						decimalPlaces="0" />
 
-					<p:outputLabel for="upload" value="Imagem Produto" />
+					<p:outputLabel for="upload" value="#{msg['cadastro.imagem']}" />
 					<p:fileUpload fileUploadListener="#{produtoBean.uploadAction}"
 						styleClass="inputs" sizeLimit="5000000" fileLimit="1" auto="true"
 						id="upload" />
 
-					<p:outputLabel for="fornecedor" value="Fornecedor" />
+					<p:outputLabel for="fornecedor"
+						value="#{msg['cadastro.fornecedor']}" />
 					<p:autoComplete value="#{produtoBean.produto.fornecedor}"
 						id="fornecedor" converter="#{fornecedorConverter}"
 						completeMethod="#{produtoBean.nameSuggestions}" maxResults="10"
-						emptyMessage="Não há nenhum Fornecedor com este Nome!"
-						required="true" />
+						emptyMessage="#{msg['cadastro.semFornecedor']}" required="true" />
 
 					<f:facet name="footer">
 						<p:commandButton update="formTable:table @form mensagem"
-							action="#{produtoBean.salvar}" value="Cadastrar" />
+							action="#{produtoBean.salvar}"
+							value="#{msg['cadastro.botao.cadastrar']}" />
 						<p:commandButton update="@form" process="@this"
-							value="Limpar Campos" action="#{produtoBean.refresh}"
-							icon="fa fa-recycle" />
+							value="#{msg['cadastro.botao.limpar']}"
+							action="#{produtoBean.refresh}" icon="fa fa-recycle" />
 					</f:facet>
 				</p:panelGrid>
 			</h:form>
 			<p:spacer height="30" />
 			<h:form id="formTable" styleClass="table">
 				<p:dataTable id="table" var="p" value="#{produtoBean.produtos}"
-					emptyMessage="Não a Profissões Cadastradas">
+					emptyMessage="#{msg['cadastro.table.produto.vazio']}">
 
-					<f:facet name="header">Profissões Cadastradas</f:facet>
+					<f:facet name="header">#{msg['cadastro.table.produto.headerTable']}</f:facet>
 
 					<p:column headerText="ID" styleClass="td-id td-table">
 						<p:outputLabel value="#{p.id}" />
 					</p:column>
 
-					<p:column headerText="Produto">
+					<p:column headerText="#{msg['cadastro.table.column.produto']}">
 						<p:outputLabel value="#{p.nome}" />
 					</p:column>
 
-					<p:column headerText="P/Compra">
+					<p:column headerText="#{msg['cadastro.table.column.pCompra']}">
 						<p:outputLabel value="#{p.precoCompraFormatado()}" />
 					</p:column>
 
-					<p:column headerText="P/Venda">
+					<p:column headerText="#{msg['cadastro.table.column.pVenda']}">
 						<p:outputLabel value="#{p.precoVendaFormatado()}" symbol="R$ " />
 					</p:column>
 
-					<p:column headerText="Imagem">
+					<p:column headerText="#{msg['cadastro.imagem']}">
 						<h:graphicImage value="/images/#{p.imagem}" />
 					</p:column>
 
-					<p:column headerText="Ações" styleClass="td-table td-acoes">
+					<p:column headerText="#{msg['cadastro.table.column.acao']}"
+						styleClass="td-table td-acoes">
 						<p:commandButton icon="fa fa-pencil" update="form">
 							<f:setPropertyActionListener value="#{p}"
 								target="#{produtoBean.produto}" />
@@ -129,13 +135,14 @@
 					</p:column>
 				</p:dataTable>
 
-				<p:confirmDialog id="confirm" widgetVar="confirm" header="Atenção!"
-					responsive="true" showEffect="fade" hideEffect="fade"
-					closeOnEscape="true"
-					message="Tem certeza que deseja excluir #{produtoBean.produto.nome}?">
-					<p:commandButton value="Sim" icon="fa fa-check" update="table"
-						action="#{produtoBean.delete}" oncomplete="PF('confirm').hide()" />
-					<p:commandButton value="Não" icon="fa fa-times"
+				<p:confirmDialog id="confirm" widgetVar="confirm"
+					header="#{msg['cadastro.atencao']}" responsive="true"
+					showEffect="fade" hideEffect="fade" closeOnEscape="true"
+					message="#{msg['cadastro.confirmarExclusao']} #{produtoBean.produto.nome}?">
+					<p:commandButton value="#{msg['cadastro.sim']}" icon="fa fa-check"
+						update="table" action="#{produtoBean.delete}"
+						oncomplete="PF('confirm').hide()" />
+					<p:commandButton value="#{msg['cadastro.nao']}" icon="fa fa-times"
 						oncomplete="PF('confirm').hide(); return false;" />
 				</p:confirmDialog>
 			</h:form>

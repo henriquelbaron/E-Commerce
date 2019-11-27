@@ -27,7 +27,6 @@ public class Endereco implements IBaseModel, Serializable {
 	@NotBlank
 	private String cidade;
 	private String uf;
-	private Cliente cliente;
 
 	public String getLogradouro() {
 		return logradouro;
@@ -83,14 +82,6 @@ public class Endereco implements IBaseModel, Serializable {
 
 	public void setUf(String uf) {
 		this.uf = uf;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
 	}
 
 	@Override

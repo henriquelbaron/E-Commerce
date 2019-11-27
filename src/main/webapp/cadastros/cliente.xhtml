@@ -46,7 +46,7 @@
 					</p:calendar>
 
 					<p:outputLabel value="Senha" for="pwd1" />
-					<p:password id="pwd1" value="#{clienteBean.entidade.senha}"
+					<p:password id="pwd1" value="#{clienteBean.usuario.senha}"
 						match="pwd2" />
 
 					<p:outputLabel value="Confirmar Senha" for="pwd2" />
@@ -89,7 +89,7 @@
 				</f:facet>
 			</p:panelGrid>
 		</h:form>
-		<h:form id="formTable" >
+		<h:form id="formTable">
 			<p:dataTable id="table" var="p" value="#{clienteBean.entidades}"
 				emptyMessage="Não a Clientes Cadastrados">
 

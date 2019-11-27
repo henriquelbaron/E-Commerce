@@ -39,7 +39,6 @@ public abstract class Pessoa implements IBaseModel, Serializable {
 	protected Endereco endereco;
 
 
-
 	public String getNome() {
 		return nome;
 	}

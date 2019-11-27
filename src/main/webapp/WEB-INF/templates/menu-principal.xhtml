@@ -7,11 +7,21 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 
-<h:form>
-	<p:panelGrid columns="3">
-		<h:commandLink value="(48) 9 9685-0323" target="_blank" />
-		<h:commandLink value="FaceBook" target="_blank" />
-	</p:panelGrid>
+<h:form id="formMenu">
+	<div style="float: right">
+		<h:commandLink title="WhatsApp" target="_blank">
+			<p:graphicImage library="imagens" name="whatsapp.jpeg" width="26"
+				url="https://web.whatsapp.com/" styleClass="bandeira-idioma" />
+		</h:commandLink>
+		<h:commandLink title="FaceBook" target="_blank">
+			<p:graphicImage library="imagens" name="facebook.png" width="26"
+				url="https://www.facebook.com/" styleClass="bandeira-idioma" />
+		</h:commandLink>
+		<h:commandLink title="E-Mail" target="_blank">
+			<p:graphicImage library="imagens" name="email.jpeg" width="26"
+				url="https://mail.google.com/" styleClass="bandeira-idioma" />
+		</h:commandLink>
+	</div>
 	<p:graphicImage url="/resources/imagens/imagem-topo.jpg" height="200px"
 		width="100%" />
 
@@ -31,19 +41,23 @@
 		<p:menuitem value="#{msg['menu.dashboard']}" outcome="/dashboard"
 			icon="fa fa-columns" />
 		<f:facet name="options">
-			<h:commandButton title="Português" styleClass="bandeira-idioma"
-				image="resources/imagens/brazil-flag.png">
 
+			<h:commandLink title="Português">
+				<p:graphicImage library="imagens" name="brazil-flag.png" width="26"
+					styleClass="bandeira-idioma" />
 				<f:setPropertyActionListener value="pt"
 					target="#{idiomaBean.idiomaSelecionado}" />
-			</h:commandButton>
-			<h:commandButton title="Inglês" styleClass="bandeira-idioma"
-				image="resources/imagens/england-flag.png">
+			</h:commandLink>
 
+			<h:commandLink title="Inglês">
+				<p:graphicImage library="imagens" name="england-flag.png" width="26"
+					styleClass="bandeira-idioma" />
 				<f:setPropertyActionListener value="en"
 					target="#{idiomaBean.idiomaSelecionado}" />
-			</h:commandButton>
-			<p:commandButton type="button" value="Sair" icon="fa fa-home" />
+			</h:commandLink>
+
+			<p:commandButton value="Sair" icon="fa fa-home"
+				action="#{loginBean.logout}" />
 		</f:facet>
 	</p:menubar>
 </h:form>
@@ -54,6 +68,5 @@
 		converter="#{fornecedorConverter}" />
 	<p:commandButton value="Pesquisar" icon="ui-icon-check"
 		action="/pesquisa.xhtml" />
-
 </h:form>
 </html>

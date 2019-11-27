@@ -2,27 +2,22 @@ package br.com.ecommerce.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-import javax.persistence.CollectionTable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import br.com.ecommerce.domain.enums.Genero;
-import br.com.ecommerce.domain.enums.Perfil;
 import br.com.ecommerce.util.DateUtils;
 
 @Entity
@@ -30,8 +25,6 @@ import br.com.ecommerce.util.DateUtils;
 public class Cliente extends Pessoa {
 	private static final long serialVersionUID = 1L;
 
-	@NotBlank
-	private String senha;
 	@Temporal(TemporalType.DATE)
 	protected Date nascimento;
 
@@ -42,17 +35,20 @@ public class Cliente extends Pessoa {
 	@Enumerated(EnumType.STRING)
 	private Genero sexo;
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "perfis")
-	private Set<Integer> perfis = new HashSet<>();
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "idUsuario")
+	private Usuario usuario;
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public Cliente() {
 		this.pedidos = new ArrayList<>();
-		addPerfil(Perfil.CLIENTE);
-	}
-
-	public Set<Perfil> getPerfis() {
-		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
 
 	public String getNascimentoFormatado() {
@@ -73,14 +69,6 @@ public class Cliente extends Pessoa {
 
 	public void setSexo(Genero sexo) {
 		this.sexo = sexo;
-	}
-
-	public void setPerfis(Set<Integer> perfis) {
-		this.perfis = perfis;
-	}
-
-	public void addPerfil(Perfil perfil) {
-		perfis.add(perfil.getId());
 	}
 
 	public String getNome() {
@@ -105,14 +93,6 @@ public class Cliente extends Pessoa {
 
 	public void setCpfOuCnpj(String cpfOuCnpj) {
 		this.cpfOuCnpj = cpfOuCnpj;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	public Endereco getEndereco() {

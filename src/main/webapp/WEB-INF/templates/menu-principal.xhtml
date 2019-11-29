@@ -8,6 +8,8 @@
 
 
 <h:form id="formMenu">
+	<p:outputLabel
+		value="#{msg['menu.nomeUsuario']} #{loginBean.loguinService.usuarioLogado.cliente.nome}" />
 	<div style="float: right">
 		<h:commandLink title="WhatsApp" target="_blank">
 			<p:graphicImage library="imagens" name="whatsapp.jpeg" width="26"
@@ -22,6 +24,7 @@
 				url="https://mail.google.com/" styleClass="bandeira-idioma" />
 		</h:commandLink>
 	</div>
+
 	<p:graphicImage url="/resources/imagens/imagem-topo.jpg" height="200px"
 		width="100%" />
 

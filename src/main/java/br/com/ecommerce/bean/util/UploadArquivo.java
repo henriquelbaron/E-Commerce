@@ -45,7 +45,6 @@ public class UploadArquivo {
 	}
 
 	public void gravar() {
-
 		try {
 
 			FileOutputStream fos;

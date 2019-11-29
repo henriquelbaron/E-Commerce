@@ -2,6 +2,7 @@ package br.com.ecommerce.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,8 @@ import javax.persistence.Table;
 
 //import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.validator.constraints.NotBlank;
+
+import br.com.ecommerce.util.HashUtils;
 
 @Entity
 @Table(name = "usuario")
@@ -24,17 +27,10 @@ public class Usuario implements IBaseModel, Serializable {
 	private String senha;
 
 	@NotBlank
+	@Column(unique = true)
 	private String login;
-	/*
-	 * @CollectionOfElements(targetElement = Perfil.class, fetch = FetchType.EAGER)
-	 * 
-	 * @JoinTable(name = "tb_persontype", joinColumns = @JoinColumn(name =
-	 * "idPerfil"))
-	 * 
-	 * @Column(name = "perfil", nullable = false)
-	 * 
-	 * @Enumerated(EnumType.STRING) private List<Perfil> perfils;
-	 */
+
+	private boolean ativo;
 
 	@OneToOne(mappedBy = "usuario", fetch = FetchType.EAGER)
 	private Cliente cliente;
@@ -45,6 +41,14 @@ public class Usuario implements IBaseModel, Serializable {
 
 	public void setLogin(String login) {
 		this.login = login;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	public Cliente getCliente() {
@@ -60,7 +64,7 @@ public class Usuario implements IBaseModel, Serializable {
 	}
 
 	public void setSenha(String senha) {
-		this.senha = senha;
+		this.senha = HashUtils.generatedHash(senha);
 	}
 
 	@Override

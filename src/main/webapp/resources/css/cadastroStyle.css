@@ -1,6 +1,7 @@
-html{
+html {
 	background: GhostWhite;
 }
+
 .form {
 	width: 100%;
 	display: flex;
@@ -12,7 +13,6 @@ html{
 }
 
 .footer {
-	
 	position: absolute;
 	bottom: 0;
 	width: 100%;
@@ -49,6 +49,10 @@ input {
 .table {
 	margin: auto;
 	width: 600px;
+}
+
+.ui-outputlabel {
+	text-align: center;
 }
 
 .td-id {

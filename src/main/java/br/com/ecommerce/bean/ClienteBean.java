@@ -1,52 +1,57 @@
 package br.com.ecommerce.bean;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.ecommerce.bean.util.MessageUtil;
-import br.com.ecommerce.dao.ClienteDao;
+import org.primefaces.model.LazyDataModel;
+
+import br.com.ecommerce.bean.lazytable.ClienteLazyModel;
 import br.com.ecommerce.domain.Cliente;
 import br.com.ecommerce.domain.Endereco;
 import br.com.ecommerce.domain.Usuario;
+import br.com.ecommerce.service.ClienteService;
 
 @Named
 @ViewScoped
-public class ClienteBean extends CrudBean<Cliente, ClienteDao> {
+public class ClienteBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private ClienteDao clienteDao;
+	private ClienteService clienteService;
 	private String confirmarSenha;
-	private Usuario usuario;
+	private List<Cliente> clientes;
+	private Cliente cliente;
 
-	@Override
-	public ClienteDao getDao() {
-		return clienteDao;
+	private LazyDataModel<Cliente> lazyClientes;
+
+	@PostConstruct
+	public void init() {
+		lazyClientes = new ClienteLazyModel(clienteService.getClienteDao());
+		refresh();
 	}
 
-	@Override
 	public void salvar() {
-		try {
-			usuario.setLogin(entidade.getEmail());
-			entidade.setUsuario(usuario);
-			usuario.setCliente(entidade);
-			clienteDao.saveOrUpdate(entidade);
-			MessageUtil.info("Salvo com Sucesso!");
-		} catch (Exception e) {
-			System.out.println(e);
-			MessageUtil.error("Erro " + e);
-		} finally {
-			refresh();
-		}
+		cliente.getUsuario().setLogin(cliente.getEmail());
+		clienteService.saveOrUpdate(cliente);
+		refresh();
 	}
 
-	@Override
-	public Cliente newEntidade() {
-		Cliente cliente = new Cliente();
-		usuario = new Usuario();
+	public Cliente refresh() {
+		clientes = clienteService.buscarTodos();
+		cliente = new Cliente();
+		cliente.setUsuario(new Usuario());
 		cliente.setEndereco(new Endereco());
 		return cliente;
+	}
+
+	public void delete() {
+		clienteService.excluir(cliente);
+		refresh();
 	}
 
 	public String getConfirmarSenha() {
@@ -57,12 +62,28 @@ public class ClienteBean extends CrudBean<Cliente, ClienteDao> {
 		this.confirmarSenha = confirmarSenha;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public LazyDataModel<Cliente> getLazyClientes() {
+		return lazyClientes;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setLazyClientes(LazyDataModel<Cliente> lazyClientes) {
+		this.lazyClientes = lazyClientes;
+	}
+
+	public List<Cliente> getClientes() {
+		return clientes;
+	}
+
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 }

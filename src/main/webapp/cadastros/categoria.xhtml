@@ -23,7 +23,7 @@
 
 					<f:facet name="footer">
 						<p:commandButton update="formTable:table @form mensagem"
-							action="#{msg['cadastro.botao.cadastrar']}" value="Cadastrar" />
+							action="#{categoriaBean.salvar()}" value="#{msg['cadastro.botao.cadastrar']}" />
 						<p:commandButton update="@form" process="@this"
 							value="#{msg['cadastro.botao.limpar']}"
 							action="#{categoriaBean.newEntidade}" icon="fa fa-recycle" />

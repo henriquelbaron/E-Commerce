@@ -9,8 +9,9 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import br.com.ecommerce.bean.util.MessageUtil;
-import br.com.ecommerce.dao.UsuarioDao;
-import br.com.ecommerce.domain.Usuario;
+import br.com.ecommerce.exception.UsuarioDesativadoExeption;
+import br.com.ecommerce.exception.UsuarioInvalidoException;
+import br.com.ecommerce.service.LoguinService;
 
 @Named
 @SessionScoped
@@ -18,22 +19,21 @@ public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private UsuarioDao dao;
-	private Usuario usuarioLogado;
+	private LoguinService loguinService;
 	private String email;
 	private String senha;
 
 	public String login() {
-		usuarioLogado = dao.verificaLogin(email, senha);
-		if (usuarioLogado == null) {
+		try {
+			loguinService.verificaLogin(email, senha);
+			return "/dashboard.xhtml?faces-redirect=true";
+		} catch (UsuarioInvalidoException e) {
 			MessageUtil.error("Email ou Usuário incorreto!");
 			return "/login.xhtml";
+		} catch (UsuarioDesativadoExeption e) {
+			MessageUtil.error("Usuário desativado!");
+			return "/login.xhtml";
 		}
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-
-		session.setAttribute("usuarioLogado", usuarioLogado);
-
-		return "/dashboard.xhtml?faces-redirect=true";
 	}
 
 	public String logout() {
@@ -42,7 +42,6 @@ public class LoginBean implements Serializable {
 		session.invalidate();
 
 		return "/login.xhtml?faces-redirect=true";
-
 	}
 
 	public String getEmail() {
@@ -59,6 +58,10 @@ public class LoginBean implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public LoguinService getLoguinService() {
+		return loguinService;
 	}
 
 }

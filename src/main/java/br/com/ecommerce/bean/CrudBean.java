@@ -14,7 +14,7 @@ public abstract class CrudBean<T extends IBaseModel, D extends BaseDao> implemen
 	private static final long serialVersionUID = 1L;
 
 	protected T entidade;
-	private List<T> entidades;
+	protected List<T> entidades;
 
 	public void novo() {
 		entidade = newEntidade();

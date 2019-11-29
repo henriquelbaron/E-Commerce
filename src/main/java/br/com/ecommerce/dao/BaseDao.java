@@ -11,7 +11,7 @@ import br.com.ecommerce.domain.IBaseModel;
 public abstract class BaseDao<T extends IBaseModel> implements IBaseDao<T> {
 
 	@Inject
-	protected EntityManager manager;
+	public EntityManager manager;
 
 	private Class<T> persistenceClass;
 
@@ -57,6 +57,7 @@ public abstract class BaseDao<T extends IBaseModel> implements IBaseDao<T> {
 
 	@Override
 	public List<T> buscarTodos() {
+		manager.clear();
 		TypedQuery<T> query = manager.createQuery("from " + persistenceClass.getName(), persistenceClass);
 
 		List<T> resultado = query.getResultList();

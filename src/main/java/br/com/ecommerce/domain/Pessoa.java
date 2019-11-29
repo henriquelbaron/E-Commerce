@@ -30,6 +30,7 @@ public abstract class Pessoa implements IBaseModel, Serializable {
 	protected String telefone;
 	@Email
 	@NotBlank
+	@Column(unique = true)
 	protected String email;
 	@Column(length = 18)
 	@NotBlank
@@ -37,7 +38,6 @@ public abstract class Pessoa implements IBaseModel, Serializable {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idEndereco", nullable = false)
 	protected Endereco endereco;
-
 
 	public String getNome() {
 		return nome;

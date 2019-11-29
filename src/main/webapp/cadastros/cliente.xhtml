@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/layout.xhtml">
 
-	<ui:define name="titulo">Cadastro de Clientes</ui:define>
+	<ui:define name="titulo">#{msg['titulo.cadastro.cliente']}</ui:define>
 
 	<ui:define name="scripts">
 		<h:outputScript library="js" name="mascaraCpfCnpj.js" target="head" />
@@ -22,84 +22,100 @@
 			<p:panelGrid columns="1">
 				<p:panelGrid columns="2" style="width:100%" columnClasses="label">
 
-					<f:facet name="header">Cadastro</f:facet>
+					<f:facet name="header">#{msg['cadastro.cliente']}</f:facet>
 
-					<p:outputLabel value="Nome" for="nome" />
-					<p:inputText id="nome" value="#{clienteBean.entidade.nome}" />
+					<p:outputLabel value="#{msg['cadastro.nome']}" for="nome" />
+					<p:inputText id="nome" value="#{clienteBean.cliente.nome}" />
 
-					<p:outputLabel value="E-mail" for="email" />
-					<p:inputText id="email" value="#{clienteBean.entidade.email}" />
+					<p:outputLabel value="#{msg['cadastro.email']}" for="email" />
+					<p:inputText id="email" value="#{clienteBean.cliente.email}" />
 
-					<p:outputLabel value="Cpf ou Cnpj" for="cpfCnpj" />
+					<p:outputLabel value="#{msg['cadastro.cpfOuCnpj']}" for="cpfCnpj" />
 					<p:inputText onkeypress="mascara(this, cpfCnpj);" id="cpfCnpj"
-						value="#{clienteBean.entidade.cpfOuCnpj}" maxlength="18">
+						value="#{clienteBean.cliente.cpfOuCnpj}" maxlength="18">
 						<p:keyFilter regEx="/[\d]/" />
 					</p:inputText>
 
-					<p:outputLabel value="Nascimento: " for="nascimento" />
+					<p:outputLabel value="#{msg['cadastro.nascimento']}"
+						for="nascimento" />
 					<p:calendar id="nascimento" widgetVar="calWidget" effect="fade"
 						navigator="true" pattern="dd/MM/yyyy" yearRange="c-100:c+0"
 						maxdate="calWidget.today()" required="true"
 						requiredMessage="Nascimento deve ser preenchido"
-						placeholder="dd/mm/aaaa"
-						value="#{clienteBean.entidade.nascimento}" mask="99/99/9999">
+						placeholder="dd/mm/aaaa" value="#{clienteBean.cliente.nascimento}"
+						mask="99/99/9999">
 					</p:calendar>
 
-					<p:outputLabel value="Senha" for="pwd1" />
-					<p:password id="pwd1" value="#{clienteBean.usuario.senha}"
+					<p:outputLabel value="#{msg['cadastro.senha']}" for="pwd1" />
+					<p:password id="pwd1" value="#{clienteBean.cliente.usuario.senha}"
 						match="pwd2" />
 
-					<p:outputLabel value="Confirmar Senha" for="pwd2" />
+					<p:outputLabel value="#{msg['cadastro.confirmarSenha']}" for="pwd2" />
 					<p:password id="pwd2" value="#{clienteBean.confirmarSenha}"
 						required="true" />
+
+					<p:selectBooleanCheckbox value="#{clienteBean.cliente.usuario.ativo}"
+						itemLabel="#{msg['cadastro.ativo']}" />
 				</p:panelGrid>
 
 
 				<p:panelGrid columns="4">
-					<f:facet name="header">Endereço</f:facet>
+					<f:facet name="header">#{msg['cadastro.endereco']}</f:facet>
 
-					<p:outputLabel value="Logradouro" for="logradouro" />
+					<p:outputLabel value="#{msg['cadastro.logradouro']}"
+						for="logradouro" />
 					<p:inputText id="logradouro"
-						value="#{clienteBean.entidade.endereco.logradouro}" />
+						value="#{clienteBean.cliente.endereco.logradouro}" />
 					<p:outputLabel value="N°" for="numero" />
 					<p:inputText id="numero"
-						value="#{clienteBean.entidade.endereco.numero}" />
-					<p:outputLabel value="Complemento" for="complemento" />
+						value="#{clienteBean.cliente.endereco.numero}" />
+					<p:outputLabel value="#{msg['cadastro.complemento']}"
+						for="complemento" />
 					<p:inputText id="complemento"
-						value="#{clienteBean.entidade.endereco.complemento}" />
-					<p:outputLabel value="Bairro" for="bairro" />
+						value="#{clienteBean.cliente.endereco.complemento}" />
+					<p:outputLabel value="#{msg['cadastro.bairro']}" for="bairro" />
 					<p:inputText id="bairro"
-						value="#{clienteBean.entidade.endereco.bairro}" />
-					<p:outputLabel value="CEP" for="cep" />
-					<p:inputMask id="cep" value="#{clienteBean.entidade.endereco.cep}"
+						value="#{clienteBean.cliente.endereco.bairro}" />
+					<p:outputLabel value="#{msg['cadastro.cep']}" for="cep" />
+					<p:inputMask id="cep" value="#{clienteBean.cliente.endereco.cep}"
 						mask="99999-999" />
-					<p:outputLabel value="Cidade" for="cidade" />
+					<p:outputLabel value="#{msg['cadastro.cidade']}" for="cidade" />
 					<p:inputText id="cidade"
-						value="#{clienteBean.entidade.endereco.cidade}" />
-					<p:outputLabel value="UF" for="uf" />
-					<p:inputText id="uf" value="#{clienteBean.entidade.endereco.uf}" />
+						value="#{clienteBean.cliente.endereco.cidade}" />
+					<p:outputLabel value="#{msg['cadastro.uf']}" for="uf" />
+					<p:inputText id="uf" value="#{clienteBean.cliente.endereco.uf}" />
 				</p:panelGrid>
 
 				<f:facet name="footer">
 					<p:commandButton update="@form formTable mensagem"
-						action="#{clienteBean.salvar}" value="Cadastrar" />
-					<p:commandButton update="@form mensagem" value="Limpar Campos"
-						process="@this" action="#{clienteBean.newEntidade()}"
-						icon="fa fa-recycle" />
+						action="#{clienteBean.salvar}"
+						value="#{msg['cadastro.botao.cadastrar']}" />
+					<p:commandButton update="@form mensagem"
+						value="#{msg['cadastro.botao.limpar']}" process="@this"
+						action="#{clienteBean.refresh()}" icon="fa fa-recycle" />
 				</f:facet>
 			</p:panelGrid>
 		</h:form>
 		<h:form id="formTable">
-			<p:dataTable id="table" var="p" value="#{clienteBean.entidades}"
-				emptyMessage="Não a Clientes Cadastrados">
+			<p:dataTable id="table" var="p"
+				emptyMessage="#{msg['cadastro.table.cliente.vazio']}"
+				paginator="true" rows="10"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15" value="#{clienteBean.lazyClientes}"
+				lazy="true">
 
-				<f:facet name="header">Clientes Cadastrados</f:facet>
+				<f:facet name="header">#{msg['cadastro.table.cliente.headerTable']}</f:facet>
 
 				<p:column headerText="ID" styleClass="td-id td-table">
 					<p:outputLabel value="#{p.id}" />
 				</p:column>
 
-				<p:column headerText="Nome">
+				<p:column headerText="#{msg['cadastro.ativo']}"
+					styleClass="td-id td-table">
+					<p:selectBooleanCheckbox value="#{p.usuario.ativo}" disabled="true" />
+				</p:column>
+
+				<p:column headerText="#{msg['cadastro.table.column.nome']}">
 					<p:outputLabel value="#{p.nome}" />
 				</p:column>
 
@@ -107,37 +123,38 @@
 					<p:outputLabel value="#{p.cpfOuCnpj}" />
 				</p:column>
 
-				<p:column headerText="Nascimento">
+				<p:column headerText="#{msg['cadastro.table.column.nascimento']}">
 					<p:outputLabel value="#{p.nascimentoFormatado}" />
 				</p:column>
 
-				<p:column headerText="Endereço">
+				<p:column headerText="#{msg['cadastro.table.column.endereco']}">
 					<p:outputLabel value="#{p.endereco}" />
 				</p:column>
 
 
-				<p:column headerText="Ações" styleClass="td-table td-acoes">
+				<p:column headerText="#{msg['cadastro.table.column.acao']}"
+					styleClass="td-table td-acoes">
 					<p:commandButton icon="fa fa-pencil" update="form">
 						<f:setPropertyActionListener value="#{p}"
-							target="#{clienteBean.entidade}" />
+							target="#{clienteBean.cliente}" />
 					</p:commandButton>
 
 					<p:commandButton icon="fa fa-trash"
 						update="@form formTable:confirm" oncomplete="PF('confirm').show()">
 						<f:setPropertyActionListener value="#{p}"
-							target="#{clienteBean.entidade}" />
+							target="#{clienteBean.cliente}" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 
-			<p:confirmDialog id="confirm" widgetVar="confirm" header="Atenção!"
-				responsive="true" showEffect="fade" hideEffect="fade"
-				closeOnEscape="true"
-				message="Tem certeza que deseja excluir #{clienteBean.entidade.nome}?">
-				<p:commandButton value="Sim" icon="fa fa-check"
+			<p:confirmDialog id="confirm" widgetVar="confirm"
+				header="#{msg['cadastro.atencao']}" responsive="true"
+				showEffect="fade" hideEffect="fade" closeOnEscape="true"
+				message="#{msg['cadastro.confirmarExclusao']} #{clienteBean.cliente.nome}?">
+				<p:commandButton value="#{msg['cadastro.sim']}" icon="fa fa-check"
 					update="table mensagem" action="#{clienteBean.delete}"
 					oncomplete="PF('confirm').hide()" />
-				<p:commandButton value="Não" icon="fa fa-times"
+				<p:commandButton value="#{msg['cadastro.nao']}" icon="fa fa-times"
 					oncomplete="PF('confirm').hide(); return false;" />
 			</p:confirmDialog>
 		</h:form>

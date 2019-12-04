@@ -15,6 +15,7 @@ import org.primefaces.model.charts.pie.PieChartDataSet;
 import org.primefaces.model.charts.pie.PieChartModel;
 
 import br.com.ecommerce.dao.ProdutoDao;
+import br.com.ecommerce.domain.dto.FornecedorDTO;
 import br.com.ecommerce.domain.dto.ProdutoDTO;
 
 @Named
@@ -25,19 +26,25 @@ public class DashboardBean implements Serializable {
 	@Inject
 	private ProdutoDao produtoDao;
 	private List<ProdutoDTO> produtoDTOs;
+	private List<FornecedorDTO> fornecedorDTOs;
 
 	private PieChartModel produtosPorCategoriaModel;
+	private PieChartModel produtosPorFornecedorModel;
 
-	private final List<String> cores = Arrays.asList("#ff8a73", "#e8cd74", "#74d5e8", "#a2ff8c", "#c8a3ff");
+	private final List<String> gProdutoCategoriaCores = Arrays.asList("#ff8a73", "#e8cd74", "#74d5e8", "#a2ff8c",
+			"#c8a3ff");
+	private final List<String> gProdutoFornecedorCores = Arrays.asList("#D242FF", "#3C94E8", "#4FFF6F", "#E8D33C",
+			"#FF8D57");
 
 	@PostConstruct
 	public void init() {
-		produtoDTOs = produtoDao.buscaProdutosPorCategoria();
-		inicializarGraficoPessoasPorProfissao();
+		inicializarGraficoProdutosCategoria();
+		inicializarGraficoProdutoFornecedor();
 	}
 
-	private void inicializarGraficoPessoasPorProfissao() {
+	private void inicializarGraficoProdutosCategoria() {
 		produtosPorCategoriaModel = new PieChartModel();
+		produtoDTOs = produtoDao.buscaProdutosPorCategoria();
 
 		List<Number> valores = new ArrayList<>();
 		List<String> rotulos = new ArrayList<>();
@@ -49,7 +56,7 @@ public class DashboardBean implements Serializable {
 
 		PieChartDataSet dataset = new PieChartDataSet();
 		dataset.setData(valores);
-		dataset.setBackgroundColor(cores);
+		dataset.setBackgroundColor(gProdutoCategoriaCores);
 
 		ChartData dados = new ChartData();
 		dados.addChartDataSet(dataset);
@@ -59,8 +66,36 @@ public class DashboardBean implements Serializable {
 
 	}
 
+	private void inicializarGraficoProdutoFornecedor() {
+		produtosPorFornecedorModel = new PieChartModel();
+		fornecedorDTOs = produtoDao.buscaProdutosPorFornecedor();
+
+		List<Number> valores = new ArrayList<>();
+		List<String> rotulos = new ArrayList<>();
+
+		for (FornecedorDTO dto : fornecedorDTOs) {
+			rotulos.add(dto.getFornecedor());
+			valores.add(dto.getQuantidadeProdutos());
+		}
+
+		PieChartDataSet dataset = new PieChartDataSet();
+		dataset.setData(valores);
+		dataset.setBackgroundColor(gProdutoFornecedorCores);
+
+		ChartData dados = new ChartData();
+		dados.addChartDataSet(dataset);
+		dados.setLabels(rotulos);
+
+		produtosPorFornecedorModel.setData(dados);
+
+	}
+
 	public PieChartModel getProdutosPorCategoriaModel() {
 		return produtosPorCategoriaModel;
+	}
+
+	public PieChartModel getProdutosPorFornecedorModel() {
+		return produtosPorFornecedorModel;
 	}
 
 }

@@ -54,8 +54,10 @@
 					<p:password id="pwd2" value="#{clienteBean.confirmarSenha}"
 						required="true" />
 
-					<p:selectBooleanCheckbox value="#{clienteBean.cliente.usuario.ativo}"
-						itemLabel="#{msg['cadastro.ativo']}" />
+					<p:outputLabel value="#{msg['cadastro.ativo']}" for="ativo" />
+					<p:selectBooleanCheckbox
+						value="#{clienteBean.cliente.usuario.ativo}" id="ativo"
+						itemLabel="" />
 				</p:panelGrid>
 
 
@@ -117,6 +119,10 @@
 
 				<p:column headerText="#{msg['cadastro.table.column.nome']}">
 					<p:outputLabel value="#{p.nome}" />
+				</p:column>
+				
+				<p:column headerText="#{msg['cadastro.email']}">
+					<p:outputLabel value="#{p.email}" />
 				</p:column>
 
 				<p:column headerText="Cpf/Cnpj">

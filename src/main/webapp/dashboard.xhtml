@@ -12,12 +12,16 @@
 			target="head" />
 	</ui:define>
 	<ui:define name="cadastro">
-		<div class="ui-g">
-			<div class="ui-g-12 ui-md-6 ui-lg-4">
-				<p:pieChart model="#{dashboardBean.produtosPorCategoriaModel}" />
+		<h:panelGrid columns="2">
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-6 ui-lg-4">
+					<p:panelGrid columns="2">
+						<p:pieChart model="#{dashboardBean.produtosPorCategoriaModel}" />
+						<p:pieChart model="#{dashboardBean.produtosPorFornecedorModel}" />
+					</p:panelGrid>
+				</div>
 			</div>
-		</div>
-
+		</h:panelGrid>
 	</ui:define>
 
 </ui:composition>

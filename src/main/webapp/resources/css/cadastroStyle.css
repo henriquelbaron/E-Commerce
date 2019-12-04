@@ -13,9 +13,10 @@ html {
 }
 
 .footer {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
+  bottom: 0;
+  left: 0;
+  height: 40px;
+  width: 100%;
 }
 
 .conteudo-footer {
@@ -31,6 +32,15 @@ html {
 	text-decoration: underline;
 }
 
+.pesquisa{
+	padding-top: 10px;
+	float: right;
+}
+
+.pesquisa button{
+	padding-left: 10px;
+	margin-left: 10px;
+}
 .norton-png {
 	width: 80px;
 	float: right;
@@ -48,7 +58,7 @@ input {
 
 .table {
 	margin: auto;
-	width: 600px;
+	text-align: center;
 }
 
 .ui-outputlabel {

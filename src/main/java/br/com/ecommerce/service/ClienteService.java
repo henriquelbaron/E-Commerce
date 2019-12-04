@@ -27,7 +27,7 @@ public class ClienteService implements Serializable {
 			MessageUtil.info("Salvo com Sucesso!");
 		} catch (javax.persistence.PersistenceException e) {
 			System.out.println(e);
-			MessageUtil.error("Erro " + e);
+			MessageUtil.error("Este e-mail ja possui cadastro em nosso sistema!");
 		}
 	}
 
@@ -37,7 +37,7 @@ public class ClienteService implements Serializable {
 			MessageUtil.info("Excluido com Sucesso!");
 		} catch (Exception e) {
 			System.out.println(e);
-			MessageUtil.error("Erro " + e);
+			MessageUtil.error("Erro ao Deletar " + e);
 		}
 	}
 

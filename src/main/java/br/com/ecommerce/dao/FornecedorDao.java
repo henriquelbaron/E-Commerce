@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import br.com.ecommerce.domain.Fornecedor;
+import br.com.ecommerce.domain.dto.FornecedorDTO;
 
 public class FornecedorDao extends BaseDao<Fornecedor> implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,4 +22,6 @@ public class FornecedorDao extends BaseDao<Fornecedor> implements Serializable {
 
 		return resultado;
 	}
+
+	
 }

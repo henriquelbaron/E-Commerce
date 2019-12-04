@@ -8,8 +8,9 @@
 
 
 <h:form id="formMenu">
-	<p:outputLabel
-		value="#{msg['menu.nomeUsuario']} #{loginBean.loguinService.usuarioLogado.cliente.nome}" />
+	<p:outputLabel value="#{msg['menu.nomeUsuario']} " />
+	<p:outputLabel style="font-weight:bold"
+		value="#{loginBean.loguinService.usuarioLogado.cliente.nome}" />
 	<div style="float: right">
 		<h:commandLink title="WhatsApp" target="_blank">
 			<p:graphicImage library="imagens" name="whatsapp.jpeg" width="26"
@@ -60,14 +61,14 @@
 			</h:commandLink>
 
 			<p:commandButton value="Sair" icon="fa fa-home"
-				action="#{loginBean.logout}" />
+				style="margin-top: 0px;" action="#{loginBean.logout}" />
 		</f:facet>
 	</p:menubar>
 </h:form>
-<h:form>
-	<p:autoComplete value="#{menuSuperiorBean.produto}"
+<h:form styleClass="pesquisa">
+	<p:autoComplete value="#{listagemDeProdutosBean.produto}"
 		placeholder="Pesquisar Produto"
-		completeMethod="#{menuSuperiorBean.nameSuggestions}" maxResults="10"
+		completeMethod="#{listagemDeProdutosBean.nameSuggestions}" maxResults="10"
 		converter="#{fornecedorConverter}" />
 	<p:commandButton value="Pesquisar" icon="ui-icon-check"
 		action="/pesquisa.xhtml" />

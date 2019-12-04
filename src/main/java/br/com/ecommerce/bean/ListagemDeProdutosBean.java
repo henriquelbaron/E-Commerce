@@ -13,7 +13,7 @@ import br.com.ecommerce.domain.Produto;
 
 @Named
 @ViewScoped
-public class MenuSuperiorBean extends CrudBean<Produto, ProdutoDao> {
+public class ListagemDeProdutosBean extends CrudBean<Produto, ProdutoDao> {
 	private static final long serialVersionUID = 1L;
 
 	@Inject

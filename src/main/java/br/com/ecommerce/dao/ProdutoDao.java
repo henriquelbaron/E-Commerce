@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import br.com.ecommerce.domain.Produto;
+import br.com.ecommerce.domain.dto.FornecedorDTO;
 import br.com.ecommerce.domain.dto.ProdutoDTO;
 
 public class ProdutoDao extends BaseDao<Produto> implements Serializable {
@@ -39,6 +40,21 @@ public class ProdutoDao extends BaseDao<Produto> implements Serializable {
 		TypedQuery<Produto> query = manager.createQuery("from Produto where nome = :nome", Produto.class);
 		query.setParameter("nome", value);
 		List<Produto> resultado = query.getResultList();
+
+		return resultado;
+	}
+
+	public List<FornecedorDTO> buscaProdutosPorFornecedor() {
+		StringBuilder jpqlBuilder = new StringBuilder();
+		jpqlBuilder.append("select new br.com.ecommerce.domain.dto.FornecedorDTO(");
+		jpqlBuilder.append("for.nome, count(for)) ");
+		jpqlBuilder.append("from Produto pro ");
+		jpqlBuilder.append("join pro.fornecedor for ");
+		jpqlBuilder.append("group by for.nome ");
+
+		TypedQuery<FornecedorDTO> query = manager.createQuery(jpqlBuilder.toString(), FornecedorDTO.class);
+
+		List<FornecedorDTO> resultado = query.getResultList();
 
 		return resultado;
 	}

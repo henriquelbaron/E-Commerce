@@ -30,7 +30,6 @@ public class Pagamento implements IBaseModel, Serializable {
 	}
 
 	public Pagamento(Long id, EstadoPagamento estado, Pedido pedido) {
-		super();
 		this.id = id;
 		this.estado = (estado == null) ? null : estado.getCod();
 		this.pedido = pedido;

@@ -20,11 +20,12 @@ public class ListagemDeProdutosBean extends CrudBean<Produto, ProdutoDao> {
 	private ProdutoDao produtoDao;
 	private List<Produto> produtos;
 	private Produto produto;
+	public static String nomeDeBusca;
 
 	@PostConstruct
 	public void init() {
-		produtos = produtoDao.buscarTodos();
-		refresh();
+		produtos = nomeDeBusca == null ? produtoDao.buscarTodos() : produtoDao.getProdutoPorNome(nomeDeBusca);
+		nomeDeBusca = null;
 	}
 
 	@Override
@@ -38,9 +39,12 @@ public class ListagemDeProdutosBean extends CrudBean<Produto, ProdutoDao> {
 	}
 
 	public List<String> nameSuggestions(String enteredValue) {
+		ListagemDeProdutosBean.nomeDeBusca = enteredValue;
 		List<String> matches = new ArrayList<>();
-		produtos.stream().filter(p -> p.getNome().toLowerCase().contains(enteredValue.toLowerCase()))
-				.forEach(p -> matches.add(p.getNome()));
+		produtos = produtoDao.getProdutoPorNome(enteredValue);
+		produtos.forEach(p -> matches.add(p.getNome()));
+//		produtos.stream().filter(p -> p.getNome().toLowerCase().contains(enteredValue.toLowerCase()))
+//				.forEach(p -> matches.add(p.getNome()));
 		return matches;
 	}
 

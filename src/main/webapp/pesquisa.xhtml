@@ -14,28 +14,29 @@
 	<ui:define name="titulo">Cadastro de Categorias</ui:define>
 	<ui:define name="conteudo">
 		<h:form>
-
-			<p:dataScroller value="#{menuSuperiorBean.produtos}" var="p"
+			<p:dataScroller value="#{listagemDeProdutosBean.produtos}" var="p" style="align-text:center"
 				chunkSize="10">
-				<f:facet name="header">
-            Produtos
-        </f:facet>
-				<h:panelGrid columns="2" style="width:100%"
-					columnClasses="logo,detail">
+				<f:facet name="header">Produtos</f:facet>
+				<h:panelGrid columns="2" columnClasses="logo,detail">
 					<h:graphicImage value="/images/#{p.imagem}" />
+					<h:panelGrid columns="2" cellpadding="5">
+					
+						<h:outputText value="Nome:" />
+						<h:outputText value="#{p.nome}" style="font-weight: bold" />
 
-					<p:outputPanel>
-						<h:panelGrid columns="2" cellpadding="5">
-							<h:outputText value="Nome:" />
-							<h:outputText value="#{p.nome}" style="font-weight: bold" />
+						<h:outputText value="Valor:" />
+						<h:outputText value="#{p.precoVendaFormatado()}"
+							style="font-weight: bold" />
 
-							<h:outputText value="Valor:" />
-							<h:outputText value="#{p.precoVendaFormatado()}"
-								style="font-weight: bold" />
+						<h:outputText value="Cor:" />
+						<h:outputText value="#{p.cor}" style="font-weight: bold" />
 
-							<p:commandButton value="+" />
-						</h:panelGrid>
-					</p:outputPanel>
+						<h:outputText value="Tamanho:" />
+						<h:outputText value="#{p.tamanho}" style="font-weight: bold" />
+
+
+						<p:commandButton value="+" />
+					</h:panelGrid>
 				</h:panelGrid>
 			</p:dataScroller>
 		</h:form>

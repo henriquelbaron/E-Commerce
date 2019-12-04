@@ -6,33 +6,35 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-<h:head>
-	<title><ui:insert name="titulo">E-Commerce</ui:insert></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="" />
-	<ui:insert name="scripts" />
-	<ui:insert name="styleCss" />
-</h:head>
-<h:body>
-	<ui:include src="/WEB-INF/templates/menu-principal.xhtml" />
-	<p:spacer height="30" />
+<f:view locale="#{idiomaBean.locale}">
+	<h:head>
+		<title><ui:insert name="titulo">E-Commerce</ui:insert></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="" />
+		<ui:insert name="scripts" />
+		<ui:insert name="styleCss" />
+	</h:head>
+	<h:body>
+		<ui:include src="/WEB-INF/templates/menu-principal.xhtml" />
+		<p:spacer height="30" />
 
-	<p:growl id="mensagem" />
-	<ui:insert name="cadastro" />
-	<ui:insert name="conteudo" />
-	<p:spacer height="30" />
+		<p:growl id="mensagem" />
+		<ui:insert name="cadastro" />
+		<ui:insert name="conteudo" />
+		<p:spacer height="30" />
 
-	<h:form styleClass="footer">
-		<h:commandLink title="NortonSecurity" target="_blank">
-			<p:graphicImage library="imagens" name="norton.png"
-				styleClass="norton-png" url="https://br.norton.com/" />
-		</h:commandLink>
-		<div class="conteudo-footer">
-			Copyright © 2019-2019 Henrique Inc. Todos os direitos reservados. <a
-				href="#">Contrato do Usuário</a> , <a href="#">Privacidade</a>, <a
-				href="#">Cookies</a> e <a href="#">AdChoice</a>.
-		</div>
-	</h:form>
-</h:body>
+		<h:form styleClass="footer">
+			<h:commandLink title="NortonSecurity" target="_blank">
+				<p:graphicImage library="imagens" name="norton.png"
+					styleClass="norton-png" url="https://br.norton.com/" />
+			</h:commandLink>
+			<div class="conteudo-footer">
+				Copyright © 2019-2019 Henrique Inc. Todos os direitos reservados. <a
+					href="#">Contrato do Usuário</a> , <a href="#">Privacidade</a>, <a
+					href="#">Cookies</a> e <a href="#">AdChoice</a>.
+			</div>
+		</h:form>
+	</h:body>
+</f:view>
 </html>

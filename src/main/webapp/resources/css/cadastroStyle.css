@@ -89,11 +89,11 @@ input {
 }
 
 .logo {
-	width: 5%
+	width: 300px;
 }
 
 .detail {
-	width: 95%;
+	width: 400px;
 	padding-left: 25px;
 }
 

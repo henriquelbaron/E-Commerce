@@ -71,6 +71,6 @@
 		completeMethod="#{listagemDeProdutosBean.nameSuggestions}" maxResults="10"
 		converter="#{fornecedorConverter}" />
 	<p:commandButton value="Pesquisar" icon="ui-icon-check"
-		action="/pesquisa.xhtml" />
+		action="/pesquisa.xhtml" update="@form"/>
 </h:form>
 </html>

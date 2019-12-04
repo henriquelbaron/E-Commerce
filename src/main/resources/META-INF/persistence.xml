@@ -5,10 +5,17 @@
 
 	<persistence-unit name="ECommercePU">
 		<properties>
+
+			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/ecommerce?createDatabaseIfNotExist=true&amp;useTimezone=true&amp;serverTimezone=America/Sao_Paulo" 
+				/> <property name="javax.persistence.jdbc.user" value="root" /> <property 
+				name="javax.persistence.jdbc.password" value="" /> -->
+
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost/ecommerce?createDatabaseIfNotExist=true&amp;useTimezone=true&amp;serverTimezone=America/Sao_Paulo" />
-			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="" />
+				value="jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_ecb7afd6d71e1f1?createDatabaseIfNotExist=true&amp;useTimezone=true&amp;serverTimezone=America/Sao_Paulo" />
+			<property name="javax.persistence.jdbc.user"
+				value="b9e42fc12ea94f" />
+			<property name="javax.persistence.jdbc.password"
+				value="3fa06ea4" />
 
 			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.cj.jdbc.Driver" />
@@ -19,6 +26,13 @@
 
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.MySQL8Dialect" />
+
+			<property
+				name="javax.persistence.schema-generation.database.action"
+				value="create" />
+			<property name="javax.persistence.sql-load-script-source"
+				value="META-INF/dados.sql" />
+
 
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />

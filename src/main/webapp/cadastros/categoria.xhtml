@@ -23,7 +23,8 @@
 
 					<f:facet name="footer">
 						<p:commandButton update="formTable:table @form mensagem"
-							action="#{categoriaBean.salvar()}" value="#{msg['cadastro.botao.cadastrar']}" />
+							icon="fa fa-save" action="#{categoriaBean.salvar()}"
+							value="#{msg['cadastro.botao.cadastrar']}" />
 						<p:commandButton update="@form" process="@this"
 							value="#{msg['cadastro.botao.limpar']}"
 							action="#{categoriaBean.newEntidade}" icon="fa fa-recycle" />
@@ -41,11 +42,13 @@
 						<p:outputLabel value="#{p.id}" />
 					</p:column>
 
-					<p:column headerText="#{msg['cadastro.table.column.nome']}" styleClass="td-table td-nome">
+					<p:column headerText="#{msg['cadastro.table.column.nome']}"
+						styleClass="td-table td-nome">
 						<p:outputLabel value="#{p.nome}" />
 					</p:column>
 
-					<p:column headerText="#{msg['cadastro.table.column.acao']}" styleClass="td-table td-acoes">
+					<p:column headerText="#{msg['cadastro.table.column.acao']}"
+						styleClass="td-table td-acoes">
 						<p:commandButton icon="fa fa-pencil" update="form">
 							<f:setPropertyActionListener value="#{p}"
 								target="#{categoriaBean.entidade}" />
@@ -60,9 +63,9 @@
 					</p:column>
 				</p:dataTable>
 
-				<p:confirmDialog id="confirm" widgetVar="confirm" header="#{msg['cadastro.atencao']}"
-					responsive="true" showEffect="fade" hideEffect="fade"
-					closeOnEscape="true"
+				<p:confirmDialog id="confirm" widgetVar="confirm"
+					header="#{msg['cadastro.atencao']}" responsive="true"
+					showEffect="fade" hideEffect="fade" closeOnEscape="true"
 					message="#{msg['cadastro.confirmarExclusao']} #{categoriaBean.entidade.nome}?">
 					<p:commandButton value="#{msg['cadastro.sim']}" icon="fa fa-check"
 						update="table mensagem" action="#{categoriaBean.delete}"

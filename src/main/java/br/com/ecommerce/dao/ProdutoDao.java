@@ -37,8 +37,8 @@ public class ProdutoDao extends BaseDao<Produto> implements Serializable {
 	}
 
 	public List<Produto> getProdutoPorNome(String value) {
-		TypedQuery<Produto> query = manager.createQuery("from Produto where nome = :nome", Produto.class);
-		query.setParameter("nome", value);
+		TypedQuery<Produto> query = manager.createQuery("from Produto p where LOWER(p.nome) like :nome", Produto.class);
+		query.setParameter("nome", "%" + value.toLowerCase() + "%");
 		List<Produto> resultado = query.getResultList();
 
 		return resultado;

@@ -1,1 +1,2 @@
-INSERT INTO `ecommerce`.`usuario` ( `id`,`ativo`, `login`, `senha`) VALUES (1, true, 'henrique', 'haXrSkw9uTypc');
+INSERT INTO usuario (ativo, login, senha) VALUES (1, 'henrique', 'haXrSkw9uTypc');
+
